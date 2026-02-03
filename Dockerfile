@@ -6,9 +6,8 @@ FROM node:20-alpine AS builder
 
 WORKDIR /app
 
-# Build argument for API URL (passed from docker-compose)
-ARG VITE_API_URL=http://localhost:3001
-ENV VITE_API_URL=$VITE_API_URL
+# Note: VITE_API_URL is not set here - api.js will use '/api' in production
+# which nginx proxies to the backend
 
 # Copy package files
 COPY package*.json ./

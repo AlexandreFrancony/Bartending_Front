@@ -1,6 +1,9 @@
 // API client for Bartending backend
 
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+// In production (Docker), VITE_API_URL should be empty for relative URLs (nginx proxies)
+// In development, fallback to localhost:3001
+const API_URL = import.meta.env.VITE_API_URL ??
+  (import.meta.env.PROD ? '' : 'http://localhost:3001');
 
 // Helper for making requests
 async function request(endpoint, options = {}) {

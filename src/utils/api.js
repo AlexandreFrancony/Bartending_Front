@@ -96,6 +96,12 @@ export const toggleCocktailsAvailability = (cocktailIds, available) =>
 // Ingredients
 export const getIngredients = () => request('/ingredients');
 
+export const createIngredient = (name, in_stock = true) =>
+  request('/ingredients', {
+    method: 'POST',
+    body: JSON.stringify({ name, in_stock }),
+  });
+
 export const updateIngredient = (id, in_stock) =>
   request(`/ingredients/${id}`, {
     method: 'PATCH',

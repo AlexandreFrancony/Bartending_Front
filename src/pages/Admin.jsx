@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { FiRefreshCw, FiCheck, FiX, FiSearch, FiPackage, FiChevronDown, FiChevronRight, FiBook, FiEdit2, FiPlus } from 'react-icons/fi';
-import { getCocktails, getStats, getIngredients, updateIngredient, updateCocktail, createCocktail } from '../utils/api';
+import { getCocktails, getStats, getIngredients, updateIngredient, updateCocktail, createCocktail, createIngredient } from '../utils/api';
 import PageWrapper from '../components/PageWrapper';
 import UserDisplay from '../components/UserDisplay';
 import BottomNav from '../components/BottomNav';
@@ -87,6 +87,20 @@ function Admin() {
   };
 
   const handleSaveCocktail = async (data) => {
+    // Create new ingredients first if any
+    if (data.newIngredients?.length > 0) {
+      for (const ing of data.newIngredients) {
+        try {
+          await createIngredient(ing.name, true);
+          console.log(`✅ Created ingredient: ${ing.name}`);
+        } catch (error) {
+          // Ingredient might already exist, continue
+          console.warn(`Could not create ingredient ${ing.name}:`, error.message);
+        }
+      }
+      toast.success(`${data.newIngredients.length} ingrédient(s) créé(s)`);
+    }
+
     if (isCreatingCocktail) {
       await createCocktail(data);
       toast.success(`${data.name} créé`);

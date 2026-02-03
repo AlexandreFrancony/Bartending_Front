@@ -38,11 +38,6 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
     }
   }, [cocktail, isCreating]);
 
-  // Debug: log warning state changes
-  useEffect(() => {
-    console.log('>>> newIngredientsWarning state changed:', newIngredientsWarning);
-  }, [newIngredientsWarning]);
-
   const validate = () => {
     const newErrors = {};
 
@@ -71,22 +66,11 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
       (ing) => !existingNames.has(ing.name.toLowerCase().trim())
     );
 
-    // Debug logging
-    console.log('=== New Ingredient Check ===');
-    console.log('existingIngredients count:', existingIngredients.length);
-    console.log('existingNames:', [...existingNames]);
-    console.log('validIngredients:', validIngredients.map(i => i.name));
-    console.log('newIngredients found:', newIngredients.map(i => i.name));
-    console.log('confirmedNewIngredients:', confirmedNewIngredients);
-
     // If there are new ingredients and user hasn't confirmed, show warning
     if (newIngredients.length > 0 && !confirmedNewIngredients) {
-      console.log('>>> SHOWING WARNING MODAL');
       setNewIngredientsWarning(newIngredients);
-      console.log('>>> setNewIngredientsWarning called with:', newIngredients);
       return;
     }
-    console.log('>>> PROCEEDING WITH SAVE');
 
     setSaving(true);
     try {
@@ -95,6 +79,7 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
         name: name.trim(),
         image: image.trim() || null,
         ingredients: validIngredients,
+        newIngredients: confirmedNewIngredients ? newIngredients : [],
       });
       onClose();
     } catch (error) {
@@ -105,7 +90,6 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
   };
 
   const confirmNewIngredients = () => {
-    setNewIngredientsWarning(null);
     handleSave(true);
   };
 

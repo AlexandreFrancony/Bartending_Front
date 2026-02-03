@@ -68,7 +68,7 @@ function Welcome() {
 
         {/* Footer */}
         <p className="text-center text-white/70 text-sm mt-6">
-          Bartending V2
+          Tipsy
         </p>
       </div>
     </PageWrapper>

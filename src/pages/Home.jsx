@@ -83,7 +83,7 @@ function Home() {
   ];
 
   return (
-    <PageWrapper className="pb-20">
+    <PageWrapper className="pb-nav">
       <UserDisplay />
 
       {/* Search and filters */}

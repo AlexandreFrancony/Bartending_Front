@@ -175,7 +175,7 @@ function Admin() {
   const availableCocktails = cocktails.filter((c) => c.available).length;
 
   return (
-    <PageWrapper className="pb-20">
+    <PageWrapper className="pb-nav">
       <UserDisplay />
 
       {/* Header */}

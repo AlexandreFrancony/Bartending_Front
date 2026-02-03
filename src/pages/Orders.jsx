@@ -89,7 +89,7 @@ function Orders() {
   };
 
   return (
-    <PageWrapper className="pb-20">
+    <PageWrapper className="pb-nav">
       <UserDisplay />
 
       {/* Header */}

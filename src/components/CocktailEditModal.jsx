@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { FiX, FiPlus, FiTrash2, FiSave } from 'react-icons/fi';
+import { FiX, FiPlus, FiTrash2, FiSave, FiAlertTriangle } from 'react-icons/fi';
 import { motion, AnimatePresence } from 'framer-motion';
 
 // Category configuration
@@ -14,12 +14,13 @@ const categories = [
 
 const emptyIngredient = { name: '', quantity: '', category: 'Alcool' };
 
-function CocktailEditModal({ cocktail, onClose, onSave, isCreating }) {
+function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngredients = [] }) {
   const [name, setName] = useState('');
   const [image, setImage] = useState('');
   const [ingredients, setIngredients] = useState([{ ...emptyIngredient }]);
   const [saving, setSaving] = useState(false);
   const [errors, setErrors] = useState({});
+  const [newIngredientsWarning, setNewIngredientsWarning] = useState(null);
 
   useEffect(() => {
     if (cocktail && !isCreating) {
@@ -53,14 +54,26 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating }) {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSave = async () => {
+  const handleSave = async (confirmedNewIngredients = false) => {
     if (!validate()) return;
+
+    // Filter out empty ingredients
+    const validIngredients = ingredients.filter((ing) => ing.name.trim());
+
+    // Check for new ingredients (not in existing list)
+    const existingNames = new Set(existingIngredients.map((ing) => ing.name.toLowerCase()));
+    const newIngredients = validIngredients.filter(
+      (ing) => !existingNames.has(ing.name.toLowerCase().trim())
+    );
+
+    // If there are new ingredients and user hasn't confirmed, show warning
+    if (newIngredients.length > 0 && !confirmedNewIngredients) {
+      setNewIngredientsWarning(newIngredients);
+      return;
+    }
 
     setSaving(true);
     try {
-      // Filter out empty ingredients
-      const validIngredients = ingredients.filter((ing) => ing.name.trim());
-
       await onSave({
         id: cocktail?.id,
         name: name.trim(),
@@ -73,6 +86,15 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating }) {
     } finally {
       setSaving(false);
     }
+  };
+
+  const confirmNewIngredients = () => {
+    setNewIngredientsWarning(null);
+    handleSave(true);
+  };
+
+  const cancelNewIngredients = () => {
+    setNewIngredientsWarning(null);
   };
 
   const addIngredient = () => {
@@ -237,6 +259,48 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating }) {
             {errors.submit && (
               <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-xl text-red-600 dark:text-red-400 text-sm">
                 {errors.submit}
+              </div>
+            )}
+
+            {/* New Ingredients Warning */}
+            {newIngredientsWarning && (
+              <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl border border-yellow-200 dark:border-yellow-800">
+                <div className="flex items-start gap-3">
+                  <FiAlertTriangle className="text-yellow-600 dark:text-yellow-400 mt-0.5 flex-shrink-0" size={20} />
+                  <div className="flex-1">
+                    <p className="font-medium text-yellow-800 dark:text-yellow-200">
+                      Nouveaux ingrédients détectés
+                    </p>
+                    <p className="text-sm text-yellow-700 dark:text-yellow-300 mt-1">
+                      Les ingrédients suivants n'existent pas encore et seront créés :
+                    </p>
+                    <ul className="mt-2 space-y-1">
+                      {newIngredientsWarning.map((ing, idx) => (
+                        <li key={idx} className="text-sm text-yellow-800 dark:text-yellow-200 flex items-center gap-2">
+                          <span className="w-2 h-2 bg-yellow-500 rounded-full" />
+                          <span className="font-medium">{ing.name}</span>
+                          <span className="text-yellow-600 dark:text-yellow-400">({ing.category})</span>
+                        </li>
+                      ))}
+                    </ul>
+                    <div className="flex gap-2 mt-3">
+                      <button
+                        type="button"
+                        onClick={cancelNewIngredients}
+                        className="px-3 py-1.5 text-sm rounded-lg border border-yellow-300 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200 hover:bg-yellow-100 dark:hover:bg-yellow-900/30"
+                      >
+                        Corriger
+                      </button>
+                      <button
+                        type="button"
+                        onClick={confirmNewIngredients}
+                        className="px-3 py-1.5 text-sm rounded-lg bg-yellow-600 text-white hover:bg-yellow-700"
+                      >
+                        Créer et continuer
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>

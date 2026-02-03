@@ -466,6 +466,7 @@ function Admin() {
           isCreating={isCreatingCocktail}
           onClose={closeModal}
           onSave={handleSaveCocktail}
+          existingIngredients={ingredients}
         />
       )}
 

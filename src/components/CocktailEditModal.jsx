@@ -61,10 +61,17 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
     const validIngredients = ingredients.filter((ing) => ing.name.trim());
 
     // Check for new ingredients (not in existing list)
-    const existingNames = new Set(existingIngredients.map((ing) => ing.name.toLowerCase()));
+    const existingNames = new Set(existingIngredients.map((ing) => ing.name.toLowerCase().trim()));
     const newIngredients = validIngredients.filter(
       (ing) => !existingNames.has(ing.name.toLowerCase().trim())
     );
+
+    // Debug logging
+    console.log('=== New Ingredient Check ===');
+    console.log('existingIngredients count:', existingIngredients.length);
+    console.log('existingNames:', [...existingNames]);
+    console.log('validIngredients:', validIngredients.map(i => i.name));
+    console.log('newIngredients found:', newIngredients.map(i => i.name));
 
     // If there are new ingredients and user hasn't confirmed, show warning
     if (newIngredients.length > 0 && !confirmedNewIngredients) {

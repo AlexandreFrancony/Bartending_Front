@@ -2,8 +2,7 @@
 
 // In production (Docker), use /api prefix (nginx proxies and strips it)
 // In development, connect directly to backend
-const API_URL = import.meta.env.VITE_API_URL ??
-  (import.meta.env.PROD ? '/api' : 'http://localhost:3001');
+const API_URL = import.meta.env.PROD ? '/api' : 'http://localhost:3001';
 
 // Helper for making requests
 async function request(endpoint, options = {}) {

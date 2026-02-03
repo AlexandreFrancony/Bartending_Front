@@ -40,6 +40,12 @@ export const updateCocktail = (id, data) =>
     body: JSON.stringify(data),
   });
 
+export const createCocktail = (data) =>
+  request('/cocktails', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
+
 // Customers
 export const getCustomers = () => request('/customers');
 

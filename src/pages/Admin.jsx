@@ -1,9 +1,10 @@
 import { useState, useEffect, useMemo } from 'react';
-import { FiRefreshCw, FiCheck, FiX, FiSearch, FiPackage, FiChevronDown, FiChevronRight } from 'react-icons/fi';
-import { getCocktails, getStats, getIngredients, updateIngredient } from '../utils/api';
+import { FiRefreshCw, FiCheck, FiX, FiSearch, FiPackage, FiChevronDown, FiChevronRight, FiBook, FiEdit2, FiPlus } from 'react-icons/fi';
+import { getCocktails, getStats, getIngredients, updateIngredient, updateCocktail, createCocktail } from '../utils/api';
 import PageWrapper from '../components/PageWrapper';
 import UserDisplay from '../components/UserDisplay';
 import BottomNav from '../components/BottomNav';
+import CocktailEditModal from '../components/CocktailEditModal';
 import toast from 'react-hot-toast';
 
 // Category configuration with colors and French labels
@@ -25,6 +26,8 @@ function Admin() {
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
   const [expandedCategories, setExpandedCategories] = useState(new Set());
+  const [editingCocktail, setEditingCocktail] = useState(null);
+  const [isCreatingCocktail, setIsCreatingCocktail] = useState(false);
 
   useEffect(() => {
     loadData();
@@ -81,6 +84,37 @@ function Admin() {
       }
       return newSet;
     });
+  };
+
+  const handleSaveCocktail = async (data) => {
+    if (isCreatingCocktail) {
+      await createCocktail(data);
+      toast.success(`${data.name} créé`);
+    } else {
+      await updateCocktail(data.id, {
+        name: data.name,
+        image: data.image,
+        ingredients: data.ingredients,
+      });
+      toast.success(`${data.name} modifié`);
+    }
+    // Reload data
+    await loadData();
+  };
+
+  const openCreateModal = () => {
+    setIsCreatingCocktail(true);
+    setEditingCocktail({});
+  };
+
+  const openEditModal = (cocktail) => {
+    setIsCreatingCocktail(false);
+    setEditingCocktail(cocktail);
+  };
+
+  const closeModal = () => {
+    setEditingCocktail(null);
+    setIsCreatingCocktail(false);
   };
 
   // Group ingredients by category (extracted from cocktails)
@@ -170,24 +204,35 @@ function Admin() {
       <div className="px-4 py-2 flex gap-2">
         <button
           onClick={() => setActiveTab('ingredients')}
-          className={`flex-1 py-2 px-4 rounded-xl text-sm font-medium transition-colors flex items-center justify-center gap-2 ${
+          className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-colors flex items-center justify-center gap-1.5 ${
             activeTab === 'ingredients'
               ? 'bg-blue-600 text-white'
               : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700'
           }`}
         >
-          <FiPackage size={16} />
-          Ingrédients
+          <FiPackage size={14} />
+          Stock
         </button>
         <button
           onClick={() => setActiveTab('cocktails')}
-          className={`flex-1 py-2 px-4 rounded-xl text-sm font-medium transition-colors ${
+          className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-colors ${
             activeTab === 'cocktails'
               ? 'bg-blue-600 text-white'
               : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700'
           }`}
         >
           Cocktails
+        </button>
+        <button
+          onClick={() => setActiveTab('recettes')}
+          className={`flex-1 py-2 px-3 rounded-xl text-sm font-medium transition-colors flex items-center justify-center gap-1.5 ${
+            activeTab === 'recettes'
+              ? 'bg-blue-600 text-white'
+              : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700'
+          }`}
+        >
+          <FiBook size={14} />
+          Recettes
         </button>
       </div>
 
@@ -348,6 +393,80 @@ function Admin() {
             })
           )}
         </div>
+      )}
+
+      {/* Recettes Tab */}
+      {activeTab === 'recettes' && (
+        <div className="px-4 py-2 space-y-2">
+          {/* Add button */}
+          <button
+            onClick={openCreateModal}
+            className="w-full py-3 px-4 rounded-xl border-2 border-dashed border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400 hover:border-blue-500 hover:text-blue-500 dark:hover:border-blue-400 dark:hover:text-blue-400 transition-colors flex items-center justify-center gap-2"
+          >
+            <FiPlus size={20} />
+            Ajouter une recette
+          </button>
+
+          {loading ? (
+            [...Array(5)].map((_, i) => (
+              <div key={i} className="bg-white dark:bg-gray-800 rounded-xl p-4 animate-pulse">
+                <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-2" />
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2" />
+              </div>
+            ))
+          ) : (
+            cocktails.map((cocktail) => (
+              <div
+                key={cocktail.id}
+                className="bg-white dark:bg-gray-800 rounded-xl p-4"
+              >
+                <div className="flex items-center justify-between">
+                  <div className="flex-1 min-w-0">
+                    <h3 className="font-medium text-gray-900 dark:text-white truncate">
+                      {cocktail.name}
+                    </h3>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      {cocktail.ingredients?.length || 0} ingrédients
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => openEditModal(cocktail)}
+                    className="ml-3 p-2.5 text-gray-500 hover:text-blue-600 dark:text-gray-400 dark:hover:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 rounded-lg transition-colors"
+                  >
+                    <FiEdit2 size={18} />
+                  </button>
+                </div>
+
+                {/* Ingredients preview */}
+                <div className="mt-2 flex flex-wrap gap-1">
+                  {cocktail.ingredients?.slice(0, 4).map((ing, idx) => (
+                    <span
+                      key={idx}
+                      className="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 rounded-full text-xs text-gray-600 dark:text-gray-300"
+                    >
+                      {ing.name}
+                    </span>
+                  ))}
+                  {cocktail.ingredients?.length > 4 && (
+                    <span className="px-2 py-0.5 bg-gray-100 dark:bg-gray-700 rounded-full text-xs text-gray-600 dark:text-gray-300">
+                      +{cocktail.ingredients.length - 4}
+                    </span>
+                  )}
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      )}
+
+      {/* Cocktail Edit Modal */}
+      {editingCocktail && (
+        <CocktailEditModal
+          cocktail={editingCocktail}
+          isCreating={isCreatingCocktail}
+          onClose={closeModal}
+          onSave={handleSaveCocktail}
+        />
       )}
 
       <BottomNav />

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FiX } from 'react-icons/fi';
 import { createOrder } from '../utils/api';
-import { getUsername } from '../utils/storage';
+import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 
 // Import all cocktail images dynamically
@@ -29,12 +29,17 @@ const categoryStyles = {
 
 function CocktailDrawer({ cocktail, onClose }) {
   const [isOrdering, setIsOrdering] = useState(false);
+  const { isAuthenticated } = useAuth();
   const imageUrl = getImageUrl(cocktail?.image);
-  const username = getUsername();
 
   if (!cocktail) return null;
 
   const handleOrder = async () => {
+    if (!isAuthenticated) {
+      toast.error('Connectez-vous pour commander');
+      return;
+    }
+
     if (!cocktail.available) {
       toast.error('Ce cocktail n\'est pas disponible');
       return;
@@ -42,7 +47,7 @@ function CocktailDrawer({ cocktail, onClose }) {
 
     setIsOrdering(true);
     try {
-      await createOrder(username, cocktail.id);
+      await createOrder(cocktail.id);
       toast.success(`${cocktail.name} commandé !`);
       onClose();
     } catch (error) {
@@ -140,21 +145,35 @@ function CocktailDrawer({ cocktail, onClose }) {
 
           {/* Order button */}
           <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex-shrink-0">
-            <button
-              onClick={handleOrder}
-              disabled={isOrdering || !cocktail.available}
-              className={`w-full py-3 px-4 rounded-xl font-semibold text-white transition-colors ${
-                cocktail.available
-                  ? 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800'
-                  : 'bg-gray-400 cursor-not-allowed'
-              } disabled:opacity-50`}
-            >
-              {isOrdering
-                ? 'Commande en cours...'
-                : cocktail.available
-                ? 'Commander'
-                : 'Indisponible'}
-            </button>
+            {isAuthenticated ? (
+              <button
+                onClick={handleOrder}
+                disabled={isOrdering || !cocktail.available}
+                className={`w-full py-3 px-4 rounded-xl font-semibold text-white transition-colors ${
+                  cocktail.available
+                    ? 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800'
+                    : 'bg-gray-400 cursor-not-allowed'
+                } disabled:opacity-50`}
+              >
+                {isOrdering
+                  ? 'Commande en cours...'
+                  : cocktail.available
+                  ? 'Commander'
+                  : 'Indisponible'}
+              </button>
+            ) : (
+              <div className="text-center">
+                <p className="text-gray-500 dark:text-gray-400 text-sm mb-2">
+                  Connectez-vous pour commander ce cocktail
+                </p>
+                <a
+                  href="/login"
+                  className="inline-block py-2.5 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors"
+                >
+                  Se connecter
+                </a>
+              </div>
+            )}
           </div>
         </div>
       </div>

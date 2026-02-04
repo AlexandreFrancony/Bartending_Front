@@ -1,6 +1,27 @@
 // localStorage utilities
 
-// Favorites
+// ============================================================================
+// AUTH TOKEN
+// ============================================================================
+
+const TOKEN_KEY = 'auth_token';
+
+export function getToken() {
+  return localStorage.getItem(TOKEN_KEY);
+}
+
+export function setToken(token) {
+  localStorage.setItem(TOKEN_KEY, token);
+}
+
+export function clearToken() {
+  localStorage.removeItem(TOKEN_KEY);
+}
+
+// ============================================================================
+// FAVORITES
+// ============================================================================
+
 export function getFavorites() {
   try {
     const stored = localStorage.getItem('favorites');
@@ -28,7 +49,10 @@ export function isFavorite(cocktailId) {
   return getFavorites().includes(cocktailId);
 }
 
-// Theme
+// ============================================================================
+// THEME
+// ============================================================================
+
 export function getTheme() {
   return localStorage.getItem('theme') || 'system';
 }
@@ -56,7 +80,10 @@ export function toggleTheme() {
   return !isDark;
 }
 
-// Username
+// ============================================================================
+// LEGACY (kept for migration, will be removed)
+// ============================================================================
+
 export function getUsername() {
   return localStorage.getItem('username') || '';
 }
@@ -69,6 +96,8 @@ export function clearUsername() {
   localStorage.removeItem('username');
 }
 
+// Legacy admin check - now handled by AuthContext
 export function isAdmin() {
-  return getUsername() === 'Bloster';
+  // This is deprecated - use useAuth().isAdmin instead
+  return false;
 }

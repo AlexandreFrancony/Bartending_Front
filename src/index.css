@@ -9,6 +9,8 @@
 
 html {
   scroll-behavior: smooth;
+  /* Background for iOS browser transparent areas */
+  @apply bg-gray-800;
 }
 
 body {
@@ -18,13 +20,13 @@ body {
   min-height: 100dvh;
 }
 
-/* Safe area insets for iOS - extra padding to push content above browser UI */
+/* Safe area insets for iOS */
 .safe-bottom {
-  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
+  padding-bottom: env(safe-area-inset-bottom, 0px);
 }
 
 .safe-top {
-  padding-top: max(0.5rem, env(safe-area-inset-top, 0px));
+  padding-top: env(safe-area-inset-top, 0px);
 }
 
 /* Bottom padding for content above fixed nav (nav height ~60px + safe area) */

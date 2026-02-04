@@ -24,7 +24,7 @@ body {
 }
 
 .safe-top {
-  padding-top: env(safe-area-inset-top, 0px);
+  padding-top: max(0.5rem, env(safe-area-inset-top, 0px));
 }
 
 /* Bottom padding for content above fixed nav (nav height ~60px + safe area) */

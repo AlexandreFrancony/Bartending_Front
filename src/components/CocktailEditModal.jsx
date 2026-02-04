@@ -235,14 +235,14 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
                           updateIngredient(index, 'quantity', e.target.value)
                         }
                         placeholder="Quantité (ex: 4 cl)"
-                        className="flex-1 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 text-sm"
+                        className="w-1/3 min-w-0 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 text-sm"
                       />
                       <select
                         value={ingredient.category}
                         onChange={(e) =>
                           updateIngredient(index, 'category', e.target.value)
                         }
-                        className="flex-1 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm"
+                        className="w-2/3 min-w-0 px-2 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm truncate"
                       >
                         {categories.map((cat) => (
                           <option key={cat.value} value={cat.value}>

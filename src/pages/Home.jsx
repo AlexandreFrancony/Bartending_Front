@@ -57,7 +57,7 @@ function Home() {
       return true;
     });
 
-    // Sort: available first, then favorites, then alphabetically
+    // Sort: available first, then favorites, then alcoholic, then alphabetically
     result.sort((a, b) => {
       // Available cocktails first
       if (a.available && !b.available) return -1;
@@ -68,6 +68,12 @@ function Home() {
       const bFav = favorites.includes(b.id);
       if (aFav && !bFav) return -1;
       if (!aFav && bFav) return 1;
+
+      // Then alcoholic cocktails before non-alcoholic
+      const aHasAlcohol = a.ingredients?.some((ing) => ing.category === 'Alcool');
+      const bHasAlcohol = b.ingredients?.some((ing) => ing.category === 'Alcool');
+      if (aHasAlcohol && !bHasAlcohol) return -1;
+      if (!aHasAlcohol && bHasAlcohol) return 1;
 
       // Then alphabetically
       return a.name.localeCompare(b.name);

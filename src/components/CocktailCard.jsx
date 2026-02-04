@@ -17,8 +17,20 @@ function getImageUrl(imageName) {
   return null;
 }
 
+// Fallback component when image fails to load (e.g., ad blocker)
+function CocktailPlaceholder() {
+  return (
+    <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
+      <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 22h8M12 11v11M19 3l-7 8-7-8h14zM5 3h14" />
+      </svg>
+    </div>
+  );
+}
+
 function CocktailCard({ cocktail, onClick }) {
   const [favorite, setFavorite] = useState(isFavorite(cocktail.id));
+  const [imageError, setImageError] = useState(false);
   const imageUrl = getImageUrl(cocktail.image);
 
   const handleFavoriteClick = (e) => {
@@ -39,19 +51,16 @@ function CocktailCard({ cocktail, onClick }) {
     >
       {/* Image */}
       <div className="aspect-square bg-gray-100 dark:bg-gray-700 relative overflow-hidden">
-        {imageUrl ? (
+        {imageUrl && !imageError ? (
           <img
             src={imageUrl}
             alt={cocktail.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             loading="lazy"
+            onError={() => setImageError(true)}
           />
         ) : (
-          <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500">
-            <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 22h8M12 11v11M19 3l-7 8-7-8h14zM5 3h14" />
-            </svg>
-          </div>
+          <CocktailPlaceholder />
         )}
 
         {/* Favorite button */}

@@ -5,15 +5,27 @@ import { useState } from 'react';
 // Import all cocktail images dynamically
 const images = import.meta.glob('../assets/images/*.{jpg,jpeg,png,webp}', { eager: true });
 
+// Debug: log available images on first load
+if (typeof window !== 'undefined' && !window.__cocktailImagesLogged) {
+  window.__cocktailImagesLogged = true;
+  console.log('[CocktailCard] Available images:', Object.keys(images));
+}
+
 function getImageUrl(imageName) {
-  if (!imageName) return null;
+  if (!imageName) {
+    console.log('[CocktailCard] No image name provided');
+    return null;
+  }
 
   // Try to find the image in our assets
   for (const path in images) {
     if (path.includes(imageName)) {
-      return images[path].default;
+      const url = images[path].default;
+      console.log(`[CocktailCard] Found image for "${imageName}":`, url);
+      return url;
     }
   }
+  console.log(`[CocktailCard] Image not found for "${imageName}"`);
   return null;
 }
 
@@ -57,7 +69,15 @@ function CocktailCard({ cocktail, onClick }) {
             alt={cocktail.name}
             className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
             loading="lazy"
-            onError={() => setImageError(true)}
+            onLoad={() => console.log(`[CocktailCard] Image loaded successfully: ${cocktail.name}`)}
+            onError={(e) => {
+              console.error(`[CocktailCard] Image failed to load for "${cocktail.name}":`, {
+                src: imageUrl,
+                error: e.type,
+                blocked: e.target.naturalWidth === 0
+              });
+              setImageError(true);
+            }}
           />
         ) : (
           <CocktailPlaceholder />

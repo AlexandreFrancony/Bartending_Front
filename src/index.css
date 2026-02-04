@@ -20,7 +20,7 @@ body {
 
 /* Safe area insets for iOS */
 .safe-bottom {
-  padding-bottom: env(safe-area-inset-bottom, 0px);
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
 }
 
 .safe-top {

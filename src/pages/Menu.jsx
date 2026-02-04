@@ -7,11 +7,25 @@ import PageWrapper from '../components/PageWrapper';
 import CocktailCard from '../components/CocktailCard';
 import toast from 'react-hot-toast';
 
+// Import all cocktail images dynamically
+const images = import.meta.glob('../assets/images/*.{jpg,jpeg,png,webp}', { eager: true });
+
+function getImageUrl(imageName) {
+  if (!imageName) return null;
+  for (const path in images) {
+    if (path.includes(imageName)) {
+      return images[path].default;
+    }
+  }
+  return null;
+}
+
 // Simplified drawer for menu view (no ordering)
 function MenuCocktailDrawer({ cocktail, onClose }) {
   if (!cocktail) return null;
 
   const hasAlcohol = cocktail.ingredients?.some((ing) => ing.category === 'Alcool');
+  const imageUrl = getImageUrl(cocktail.image);
 
   return (
     <>
@@ -22,10 +36,10 @@ function MenuCocktailDrawer({ cocktail, onClose }) {
       <div className="fixed inset-x-0 bottom-0 z-50 animate-slide-up">
         <div className="bg-white dark:bg-gray-800 rounded-t-2xl max-h-[85vh] overflow-hidden flex flex-col safe-bottom">
           {/* Image */}
-          {cocktail.image && (
+          {imageUrl && (
             <div className="relative h-48 flex-shrink-0">
               <img
-                src={cocktail.image}
+                src={imageUrl}
                 alt={cocktail.name}
                 className="w-full h-full object-cover"
               />

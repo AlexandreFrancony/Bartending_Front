@@ -106,6 +106,15 @@ function Login() {
               </>
             )}
           </button>
+
+          <div className="text-right">
+            <Link
+              to="/forgot-password"
+              className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+            >
+              Mot de passe oublié ?
+            </Link>
+          </div>
         </form>
 
         {/* Links */}

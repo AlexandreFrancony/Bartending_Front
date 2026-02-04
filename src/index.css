@@ -18,9 +18,9 @@ body {
   min-height: 100dvh;
 }
 
-/* Safe area insets for iOS */
+/* Safe area insets for iOS - extra padding to push content above browser UI */
 .safe-bottom {
-  padding-bottom: max(0.5rem, env(safe-area-inset-bottom, 0px));
+  padding-bottom: calc(1rem + env(safe-area-inset-bottom, 0px));
 }
 
 .safe-top {

@@ -3,7 +3,9 @@ import { Link } from 'react-router-dom';
 import { FiMail, FiArrowLeft } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
-const API_URL = import.meta.env.VITE_API_URL || '';
+// In production (Docker), use /api prefix (nginx proxies it)
+// In development, connect directly to backend
+const API_URL = import.meta.env.PROD ? '/api' : 'http://localhost:3001/api';
 
 function ForgotPassword() {
   const [email, setEmail] = useState('');
@@ -20,7 +22,7 @@ function ForgotPassword() {
 
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/api/auth/forgot-password`, {
+      const response = await fetch(`${API_URL}/auth/forgot-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: email.trim() }),

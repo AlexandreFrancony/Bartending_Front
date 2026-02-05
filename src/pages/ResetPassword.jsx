@@ -3,7 +3,9 @@ import { Link, useSearchParams, useNavigate } from 'react-router-dom';
 import { FiLock, FiEye, FiEyeOff, FiArrowLeft } from 'react-icons/fi';
 import toast from 'react-hot-toast';
 
-const API_URL = import.meta.env.VITE_API_URL || '';
+// In production (Docker), use /api prefix (nginx proxies it)
+// In development, connect directly to backend
+const API_URL = import.meta.env.PROD ? '/api' : 'http://localhost:3001/api';
 
 function ResetPassword() {
   const [searchParams] = useSearchParams();
@@ -36,7 +38,7 @@ function ResetPassword() {
 
     setLoading(true);
     try {
-      const response = await fetch(`${API_URL}/api/auth/reset-password`, {
+      const response = await fetch(`${API_URL}/auth/reset-password`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ token, password }),

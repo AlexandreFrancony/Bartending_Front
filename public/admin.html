@@ -90,6 +90,99 @@
         .card.logs { border-top: 3px solid #3b82f6; }
         .card.github { border-top: 3px solid #8b5cf6; }
 
+        /* System Stats Section */
+        .stats-section {
+            margin-top: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+        }
+
+        .stats-title {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .stat-icon {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .stat-label {
+            color: #8892b0;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .stat-detail {
+            color: #64748b;
+            font-size: 0.75rem;
+            margin-top: 4px;
+        }
+
+        /* Color indicators */
+        .stat-value.green { color: #10b981; }
+        .stat-value.yellow { color: #f59e0b; }
+        .stat-value.red { color: #ef4444; }
+
+        .uptime-row {
+            text-align: center;
+            color: #8892b0;
+            font-size: 0.9rem;
+            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .uptime-row .uptime-value {
+            color: #fff;
+            font-weight: 500;
+        }
+
+        .last-updated {
+            text-align: center;
+            color: #4a5568;
+            font-size: 0.75rem;
+            margin-top: 10px;
+        }
+
+        .stats-error {
+            text-align: center;
+            color: #ef4444;
+            padding: 20px;
+        }
+
+        .stats-loading {
+            text-align: center;
+            color: #8892b0;
+            padding: 20px;
+        }
+
         .footer {
             margin-top: 50px;
             color: #4a5568;
@@ -129,9 +222,120 @@
             </a>
         </div>
 
+        <!-- System Stats Section -->
+        <div class="stats-section">
+            <div class="stats-title">📊 System Status</div>
+            <div id="stats-content">
+                <div class="stats-loading">Loading system stats...</div>
+            </div>
+        </div>
+
         <div class="footer">
             Tipsy Admin Portal &bull; Hosted on Raspberry Pi 4
         </div>
     </div>
+
+    <script>
+        // Format bytes to human readable
+        function formatBytes(bytes) {
+            const gb = bytes / (1024 * 1024 * 1024);
+            return gb.toFixed(1) + ' GB';
+        }
+
+        // Format uptime to human readable
+        function formatUptime(seconds) {
+            const days = Math.floor(seconds / 86400);
+            const hours = Math.floor((seconds % 86400) / 3600);
+            const minutes = Math.floor((seconds % 3600) / 60);
+
+            let parts = [];
+            if (days > 0) parts.push(days + ' day' + (days !== 1 ? 's' : ''));
+            if (hours > 0) parts.push(hours + ' hour' + (hours !== 1 ? 's' : ''));
+            if (minutes > 0) parts.push(minutes + ' min');
+
+            return parts.join(', ') || '< 1 min';
+        }
+
+        // Get color class based on value and thresholds
+        function getColorClass(value, yellowThreshold, redThreshold) {
+            if (value >= redThreshold) return 'red';
+            if (value >= yellowThreshold) return 'yellow';
+            return 'green';
+        }
+
+        // Fetch and display stats
+        async function fetchStats() {
+            const container = document.getElementById('stats-content');
+
+            try {
+                const response = await fetch('https://tipsy.francony.fr/webhook/stats');
+                if (!response.ok) throw new Error('Failed to fetch');
+
+                const data = await response.json();
+
+                const tempColor = data.cpu_temp !== null ? getColorClass(data.cpu_temp, 60, 75) : '';
+                const cpuColor = getColorClass(data.cpu_percent, 70, 90);
+                const ramColor = getColorClass(data.memory_percent, 70, 85);
+                const diskColor = getColorClass(data.disk_percent, 80, 90);
+
+                container.innerHTML = `
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon">🌡️</div>
+                            <div class="stat-value ${tempColor}">${data.cpu_temp !== null ? data.cpu_temp + '°C' : 'N/A'}</div>
+                            <div class="stat-label">CPU Temp</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">💻</div>
+                            <div class="stat-value ${cpuColor}">${data.cpu_percent.toFixed(0)}%</div>
+                            <div class="stat-label">CPU Usage</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">💾</div>
+                            <div class="stat-value ${ramColor}">${data.memory_percent.toFixed(0)}%</div>
+                            <div class="stat-label">RAM</div>
+                            <div class="stat-detail">${formatBytes(data.memory_used)} / ${formatBytes(data.memory_total)}</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">📦</div>
+                            <div class="stat-value ${diskColor}">${data.disk_percent.toFixed(0)}%</div>
+                            <div class="stat-label">Disk</div>
+                            <div class="stat-detail">${formatBytes(data.disk_used)} / ${formatBytes(data.disk_total)}</div>
+                        </div>
+                    </div>
+                    <div class="uptime-row">
+                        ⏱️ Uptime: <span class="uptime-value">${formatUptime(data.uptime_seconds)}</span>
+                    </div>
+                    <div class="last-updated">Last updated: just now</div>
+                `;
+
+                // Update "last updated" text
+                let secondsAgo = 0;
+                const updateInterval = setInterval(() => {
+                    secondsAgo++;
+                    const lastUpdated = container.querySelector('.last-updated');
+                    if (lastUpdated) {
+                        lastUpdated.textContent = `Last updated: ${secondsAgo} second${secondsAgo !== 1 ? 's' : ''} ago`;
+                    }
+                }, 1000);
+
+                // Clear interval when next fetch happens
+                setTimeout(() => clearInterval(updateInterval), 5000);
+
+            } catch (error) {
+                container.innerHTML = `
+                    <div class="stats-error">
+                        ⚠️ Unable to fetch system stats
+                    </div>
+                `;
+            }
+        }
+
+        // Initial fetch
+        fetchStats();
+
+        // Refresh every 5 seconds
+        setInterval(fetchStats, 5000);
+    </script>
 </body>
 </html>

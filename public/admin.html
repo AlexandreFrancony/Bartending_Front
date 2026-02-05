@@ -183,6 +183,72 @@
             padding: 20px;
         }
 
+        /* SSL Certificates Section */
+        .ssl-section {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 25px;
+        }
+
+        .ssl-title {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .ssl-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 15px;
+        }
+
+        .ssl-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+        }
+
+        .ssl-domain {
+            color: #fff;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            word-break: break-all;
+        }
+
+        .ssl-days {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .ssl-days.green { color: #10b981; }
+        .ssl-days.yellow { color: #f59e0b; }
+        .ssl-days.red { color: #ef4444; }
+
+        .ssl-label {
+            color: #8892b0;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .ssl-expiry {
+            color: #64748b;
+            font-size: 0.7rem;
+            margin-top: 6px;
+        }
+
+        .ssl-error {
+            color: #ef4444;
+            font-size: 0.8rem;
+        }
+
         .footer {
             margin-top: 50px;
             color: #4a5568;
@@ -230,6 +296,14 @@
             </div>
         </div>
 
+        <!-- SSL Certificates Section -->
+        <div class="ssl-section">
+            <div class="ssl-title">🔒 SSL Certificates</div>
+            <div id="ssl-content">
+                <div class="stats-loading">Loading SSL status...</div>
+            </div>
+        </div>
+
         <div class="footer">
             Tipsy Admin Portal &bull; Hosted on Raspberry Pi 4
         </div>
@@ -261,6 +335,56 @@
             if (value >= redThreshold) return 'red';
             if (value >= yellowThreshold) return 'yellow';
             return 'green';
+        }
+
+        // Get SSL color class (inverted - lower is worse)
+        function getSSLColorClass(days) {
+            if (days <= 14) return 'red';
+            if (days <= 30) return 'yellow';
+            return 'green';
+        }
+
+        // Format date for display
+        function formatExpiryDate(isoDate) {
+            const date = new Date(isoDate);
+            return date.toLocaleDateString('en-GB', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            });
+        }
+
+        // Render SSL certificates section
+        function renderSSLCertificates(certificates) {
+            const container = document.getElementById('ssl-content');
+
+            if (!certificates || certificates.length === 0) {
+                container.innerHTML = '<div class="stats-error">No SSL certificates configured</div>';
+                return;
+            }
+
+            const cardsHtml = certificates.map(cert => {
+                if (cert.error) {
+                    return `
+                        <div class="ssl-card">
+                            <div class="ssl-domain">${cert.domain}</div>
+                            <div class="ssl-error">⚠️ ${cert.error}</div>
+                        </div>
+                    `;
+                }
+
+                const colorClass = getSSLColorClass(cert.days_remaining);
+                return `
+                    <div class="ssl-card">
+                        <div class="ssl-domain">${cert.domain}</div>
+                        <div class="ssl-days ${colorClass}">${cert.days_remaining}</div>
+                        <div class="ssl-label">days remaining</div>
+                        <div class="ssl-expiry">Expires: ${formatExpiryDate(cert.expiry_date)}</div>
+                    </div>
+                `;
+            }).join('');
+
+            container.innerHTML = `<div class="ssl-grid">${cardsHtml}</div>`;
         }
 
         // Fetch and display stats
@@ -322,10 +446,20 @@
                 // Clear interval when next fetch happens
                 setTimeout(() => clearInterval(updateInterval), 5000);
 
+                // Render SSL certificates
+                if (data.ssl_certificates) {
+                    renderSSLCertificates(data.ssl_certificates);
+                }
+
             } catch (error) {
                 container.innerHTML = `
                     <div class="stats-error">
                         ⚠️ Unable to fetch system stats
+                    </div>
+                `;
+                document.getElementById('ssl-content').innerHTML = `
+                    <div class="stats-error">
+                        ⚠️ Unable to fetch SSL status
                     </div>
                 `;
             }

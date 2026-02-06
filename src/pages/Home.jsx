@@ -135,7 +135,7 @@ function Home() {
       {/* Cocktail grid */}
       <div className="px-4 py-4">
         {loading ? (
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
@@ -157,7 +157,7 @@ function Home() {
             </p>
           </div>
         ) : (
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
             {filteredCocktails.map((cocktail) => (
               <CocktailCard
                 key={cocktail.id}

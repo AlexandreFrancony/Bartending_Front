@@ -1,7 +1,9 @@
 import { useState, useEffect, useMemo } from 'react';
-import { FiSearch, FiX } from 'react-icons/fi';
-import { getCocktails } from '../utils/api';
+import { Link } from 'react-router-dom';
+import { FiSearch, FiX, FiList } from 'react-icons/fi';
+import { getCocktails, getMyOrders } from '../utils/api';
 import { getFavorites } from '../utils/storage';
+import { useAuth } from '../context/AuthContext';
 import PageWrapper from '../components/PageWrapper';
 import UserDisplay from '../components/UserDisplay';
 import BottomNav from '../components/BottomNav';
@@ -15,10 +17,25 @@ function Home() {
   const [search, setSearch] = useState('');
   const [filter, setFilter] = useState('all'); // 'all', 'alcohol', 'no-alcohol'
   const [selectedCocktail, setSelectedCocktail] = useState(null);
+  const [activeOrderCount, setActiveOrderCount] = useState(0);
+  const { isAdmin } = useAuth();
 
   useEffect(() => {
     loadCocktails();
+    loadActiveOrders();
   }, []);
+
+  const loadActiveOrders = async () => {
+    try {
+      const orders = await getMyOrders();
+      const active = orders.filter(
+        (o) => !['completed', 'cancelled'].includes(o.status)
+      );
+      setActiveOrderCount(active.length);
+    } catch (error) {
+      // Silently fail - not critical
+    }
+  };
 
   const loadCocktails = async () => {
     try {
@@ -173,8 +190,28 @@ function Home() {
       {selectedCocktail && (
         <CocktailDrawer
           cocktail={selectedCocktail}
-          onClose={() => setSelectedCocktail(null)}
+          onClose={() => {
+            setSelectedCocktail(null);
+            // Refresh order count after closing drawer (in case order was placed)
+            loadActiveOrders();
+          }}
         />
+      )}
+
+      {/* My Orders floating button (for non-admin users) */}
+      {!isAdmin && (
+        <Link
+          to="/my-orders"
+          className="fixed bottom-6 right-6 z-30 flex items-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full shadow-lg transition-all hover:scale-105 active:scale-95"
+        >
+          <FiList size={20} />
+          <span>Mes commandes</span>
+          {activeOrderCount > 0 && (
+            <span className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white text-xs font-bold rounded-full flex items-center justify-center">
+              {activeOrderCount}
+            </span>
+          )}
+        </Link>
       )}
 
       <BottomNav />

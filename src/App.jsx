@@ -9,6 +9,7 @@ import ForgotPassword from './pages/ForgotPassword';
 import ResetPassword from './pages/ResetPassword';
 import Menu from './pages/Menu';
 import Home from './pages/Home';
+import MyOrders from './pages/MyOrders';
 import Orders from './pages/Orders';
 import Admin from './pages/Admin';
 import UserManagement from './pages/UserManagement';
@@ -119,6 +120,14 @@ function AppRoutes() {
         element={
           <ProtectedRoute>
             <Home />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/my-orders"
+        element={
+          <ProtectedRoute>
+            <MyOrders />
           </ProtectedRoute>
         }
       />

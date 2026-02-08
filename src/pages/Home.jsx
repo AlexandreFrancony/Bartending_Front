@@ -54,10 +54,14 @@ function Home() {
     const favorites = getFavorites();
 
     let result = cocktails.filter((cocktail) => {
-      // Search filter
+      // Search filter (searches cocktail name AND ingredient names)
       if (search) {
         const searchLower = search.toLowerCase();
-        if (!cocktail.name.toLowerCase().includes(searchLower)) {
+        const nameMatch = cocktail.name.toLowerCase().includes(searchLower);
+        const ingredientMatch = cocktail.ingredients?.some(
+          (ing) => ing.name.toLowerCase().includes(searchLower)
+        );
+        if (!nameMatch && !ingredientMatch) {
           return false;
         }
       }
@@ -118,7 +122,7 @@ function Home() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Rechercher un cocktail..."
+            placeholder="Rechercher un cocktail ou ingrédient..."
             className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
           />
           {search && (

@@ -184,6 +184,13 @@ function Orders() {
                   </span>
                 </div>
 
+                {/* Notes */}
+                {order.notes && (
+                  <p className="text-sm text-amber-600 dark:text-amber-400 mb-3 italic">
+                    📝 {order.notes}
+                  </p>
+                )}
+
                 {/* Actions */}
                 {!['completed', 'cancelled'].includes(order.status) && (
                   <div className="flex gap-2 pt-2 border-t border-gray-100 dark:border-gray-700">

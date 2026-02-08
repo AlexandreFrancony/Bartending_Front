@@ -52,6 +52,20 @@ export const register = (userData) =>
 
 export const getMe = () => request('/auth/me');
 
+export const getFavoritesFromServer = () => request('/auth/favorites');
+
+export const updateFavoritesOnServer = (favorites) =>
+  request('/auth/favorites', {
+    method: 'PUT',
+    body: JSON.stringify({ favorites }),
+  });
+
+export const addFavoriteOnServer = (cocktailId) =>
+  request(`/auth/favorites/${cocktailId}`, { method: 'POST' });
+
+export const removeFavoriteOnServer = (cocktailId) =>
+  request(`/auth/favorites/${cocktailId}`, { method: 'DELETE' });
+
 export const changePassword = (currentPassword, newPassword) =>
   request('/auth/change-password', {
     method: 'POST',

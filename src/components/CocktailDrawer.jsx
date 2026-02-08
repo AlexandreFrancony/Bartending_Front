@@ -29,6 +29,7 @@ const categoryStyles = {
 
 function CocktailDrawer({ cocktail, onClose }) {
   const [isOrdering, setIsOrdering] = useState(false);
+  const [notes, setNotes] = useState('');
   const { isAuthenticated } = useAuth();
   const imageUrl = getImageUrl(cocktail?.image);
 
@@ -47,7 +48,7 @@ function CocktailDrawer({ cocktail, onClose }) {
 
     setIsOrdering(true);
     try {
-      await createOrder(cocktail.id);
+      await createOrder(cocktail.id, notes.trim() || undefined);
       toast.success(`${cocktail.name} commandé !`);
       onClose();
     } catch (error) {
@@ -142,6 +143,20 @@ function CocktailDrawer({ cocktail, onClose }) {
               })}
             </ul>
           </div>
+
+          {/* Notes input */}
+          {isAuthenticated && cocktail.available && (
+            <div className="px-4 pb-2">
+              <input
+                type="text"
+                value={notes}
+                onChange={(e) => setNotes(e.target.value)}
+                placeholder="Notes (sans glace, plus de citron...)"
+                maxLength={100}
+                className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+            </div>
+          )}
 
           {/* Order button */}
           <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex-shrink-0">

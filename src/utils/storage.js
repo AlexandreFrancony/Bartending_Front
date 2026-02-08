@@ -19,8 +19,15 @@ export function clearToken() {
 }
 
 // ============================================================================
-// FAVORITES
+// FAVORITES (with optional server sync)
 // ============================================================================
+
+// Callback for syncing favorites to server (set by AuthContext)
+let syncFavoritesCallback = null;
+
+export function setSyncFavoritesCallback(callback) {
+  syncFavoritesCallback = callback;
+}
 
 export function getFavorites() {
   try {
@@ -29,6 +36,10 @@ export function getFavorites() {
   } catch {
     return [];
   }
+}
+
+export function setFavorites(favorites) {
+  localStorage.setItem('favorites', JSON.stringify(favorites));
 }
 
 export function toggleFavorite(cocktailId) {
@@ -42,6 +53,12 @@ export function toggleFavorite(cocktailId) {
   }
 
   localStorage.setItem('favorites', JSON.stringify(favorites));
+
+  // Sync to server if callback is set (user is logged in)
+  if (syncFavoritesCallback) {
+    syncFavoritesCallback(favorites);
+  }
+
   return favorites;
 }
 

@@ -1,23 +1,26 @@
 # Tipsy - Frontend
 
-A modern, mobile-first React application for browsing and ordering cocktails.
+Modern, mobile-first React application for browsing and ordering cocktails.
+
+[![Live](https://img.shields.io/badge/live-tipsy.francony.fr-brightgreen)](https://tipsy.francony.fr)
 
 ## Features
 
 - Browse cocktail menu with search and filtering
 - Filter by alcoholic / non-alcoholic drinks
-- Favorite cocktails for quick access
+- Favorite cocktails (localStorage)
 - User authentication (login/register)
-- Admin dashboard for managing cocktails, ingredients, orders, and users
-- Dark mode support
+- Order tracking with real-time status updates
+- Admin dashboard for managing cocktails and orders
+- Dark mode support (system preference + manual toggle)
 - PWA-ready with iOS safe area support
 
 ## Tech Stack
 
-- **React 18** - UI framework
-- **Vite** - Build tool and dev server
-- **Tailwind CSS** - Styling
-- **React Router** - Client-side routing
+- **React 19** - UI framework
+- **Vite 6** - Build tool and dev server
+- **Tailwind CSS 3.4** - Styling
+- **React Router 7** - Client-side routing
 - **Framer Motion** - Animations
 - **React Hot Toast** - Notifications
 - **React Icons** - Icon library
@@ -30,8 +33,21 @@ src/
 ├── components/      # Reusable UI components
 ├── context/         # React context providers (Auth)
 ├── pages/           # Page components
+│   ├── Welcome.jsx     # Username entry
+│   ├── Cocktails.jsx   # Main catalog
+│   ├── Orders.jsx      # Order management (admin)
+│   └── Admin.jsx       # Cocktail availability
 └── utils/           # Utilities (API client, storage)
 ```
+
+## Pages
+
+| Route | Description |
+|-------|-------------|
+| `/welcome` | Username entry |
+| `/` | Cocktail catalog (search, filter, favorites) |
+| `/orders` | Order management (admin) |
+| `/admin` | Cocktail availability toggle (admin) |
 
 ## Prerequisites
 
@@ -62,18 +78,28 @@ npm run preview
 
 ## Docker
 
-This app is designed to run in Docker via nginx. See [Bartending_Deploy](https://github.com/AlexandreFrancony/Bartending_Deploy) for deployment configuration.
+This app runs in Docker via nginx in production. See [Bartending_Deploy](https://github.com/AlexandreFrancony/Bartending_Deploy) for deployment configuration.
 
 ```bash
 # Build Docker image
 docker build -t tipsy-frontend .
 ```
 
+## Nginx Configuration
+
+Production nginx config (`nginx.conf`) handles:
+- API proxy (`/api/` → backend:3001)
+- Webhook proxy (`/webhook/` → webhook server)
+- SSL termination (Let's Encrypt)
+- Static asset caching (1 year, immutable)
+- SPA routing (index.html fallback)
+
 ## Related Repositories
 
 - [Bartending_Back](https://github.com/AlexandreFrancony/Bartending_Back) - Express.js API
 - [Bartending_DB](https://github.com/AlexandreFrancony/Bartending_DB) - PostgreSQL schema
 - [Bartending_Deploy](https://github.com/AlexandreFrancony/Bartending_Deploy) - Docker deployment
+- [Infra](https://github.com/AlexandreFrancony/Infra) - Central reverse proxy
 
 ## License
 

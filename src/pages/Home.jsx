@@ -122,7 +122,7 @@ function Home() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Rechercher un cocktail ou ingr\u00e9dient..."
+            placeholder="Rechercher un cocktail ou ingr\édient..."
             className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           />
           {search && (
@@ -173,7 +173,7 @@ function Home() {
           <div className="text-center py-12">
             <p className="text-[var(--text-muted)]">
               {search
-                ? 'Aucun cocktail trouv\u00e9 pour cette recherche'
+                ? 'Aucun cocktail trouv\é pour cette recherche'
                 : 'Aucun cocktail disponible'}
             </p>
           </div>

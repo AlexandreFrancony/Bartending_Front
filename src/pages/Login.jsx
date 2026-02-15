@@ -23,7 +23,7 @@ function Login() {
     setLoading(true);
     try {
       await authLogin({ login: login.trim(), password });
-      toast.success('Connexion r\u00e9ussie !');
+      toast.success('Connexion r\éussie !');
       navigate('/');
     } catch (error) {
       toast.error(error.message);
@@ -41,7 +41,7 @@ function Login() {
             Tipsy Bar
           </h1>
           <p className="mt-2 text-[var(--text-secondary)]">
-            Connectez-vous \u00e0 votre compte
+            Connectez-vous \à votre compte
           </p>
         </div>
 
@@ -112,7 +112,7 @@ function Login() {
               to="/forgot-password"
               className="text-sm text-[var(--accent)] hover:underline"
             >
-              Mot de passe oubli\u00e9 ?
+              Mot de passe oubli\é ?
             </Link>
           </div>
         </form>
@@ -125,7 +125,7 @@ function Login() {
               to="/register"
               className="text-[var(--accent)] font-medium hover:underline"
             >
-              Cr\u00e9er un compte
+              Cr\éer un compte
             </Link>
           </p>
           <Link

@@ -47,7 +47,7 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
 
     const validIngredients = ingredients.filter((ing) => ing.name.trim());
     if (validIngredients.length === 0) {
-      newErrors.ingredients = 'Au moins un ingr\u00e9dient est requis';
+      newErrors.ingredients = 'Au moins un ingr\édient est requis';
     }
 
     setErrors(newErrors);
@@ -184,7 +184,7 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
             <div>
               <div className="flex items-center justify-between mb-2">
                 <label className="block text-sm font-medium text-[var(--text-secondary)]">
-                  Ingr\u00e9dients *
+                  Ingr\édients *
                 </label>
                 <button
                   type="button"
@@ -213,7 +213,7 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
                         onChange={(e) =>
                           updateIngredient(index, 'name', e.target.value)
                         }
-                        placeholder="Nom de l'ingr\u00e9dient"
+                        placeholder="Nom de l'ingr\édient"
                         className="flex-1 px-3 py-2 rounded-lg border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] text-sm"
                       />
                       {ingredients.length > 1 && (
@@ -234,7 +234,7 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
                         onChange={(e) =>
                           updateIngredient(index, 'quantity', e.target.value)
                         }
-                        placeholder="Quantit\u00e9 (ex: 4 cl)"
+                        placeholder="Quantit\é (ex: 4 cl)"
                         className="w-1/3 min-w-0 px-3 py-2 rounded-lg border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] text-sm"
                       />
                       <select
@@ -269,10 +269,10 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
                   <FiAlertTriangle className="text-[var(--status-yellow-text)] mt-0.5 flex-shrink-0" size={20} />
                   <div className="flex-1">
                     <p className="font-medium text-[var(--status-yellow-text)]">
-                      Nouveaux ingr\u00e9dients d\u00e9tect\u00e9s
+                      Nouveaux ingr\édients d\étect\és
                     </p>
                     <p className="text-sm text-[var(--status-yellow-text)] mt-1">
-                      Les ingr\u00e9dients suivants n'existent pas encore et seront cr\u00e9\u00e9s :
+                      Les ingr\édients suivants n'existent pas encore et seront cr\é\és :
                     </p>
                     <ul className="mt-2 space-y-1">
                       {newIngredientsWarning.map((ing, idx) => (
@@ -296,7 +296,7 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
                         onClick={confirmNewIngredients}
                         className="px-3 py-1.5 text-sm rounded-lg bg-yellow-600 text-white hover:bg-yellow-700"
                       >
-                        Cr\u00e9er et continuer
+                        Cr\éer et continuer
                       </button>
                     </div>
                   </div>

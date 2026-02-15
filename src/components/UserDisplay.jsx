@@ -39,7 +39,7 @@ function UserDisplay() {
         <button
           onClick={handleToggleTheme}
           className="p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] rounded-full hover:bg-[var(--bg-input)] transition-colors"
-          aria-label="Changer de th\u00e8me"
+          aria-label="Changer de th\ème"
         >
           {isDark ? <FiSun size={20} /> : <FiMoon size={20} />}
         </button>
@@ -47,7 +47,7 @@ function UserDisplay() {
         <button
           onClick={handleLogout}
           className="p-2 text-[var(--text-muted)] hover:text-[var(--status-red-text)] rounded-full hover:bg-[var(--bg-input)] transition-colors"
-          aria-label="Se d\u00e9connecter"
+          aria-label="Se d\éconnecter"
         >
           <FiLogOut size={20} />
         </button>

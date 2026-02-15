@@ -49,7 +49,7 @@ function CocktailDrawer({ cocktail, onClose }) {
     setIsOrdering(true);
     try {
       await createOrder(cocktail.id, notes.trim() || undefined);
-      toast.success(`${cocktail.name} command\u00e9 !`);
+      toast.success(`${cocktail.name} command\é !`);
       onClose();
     } catch (error) {
       toast.error(error.message || 'Erreur lors de la commande');
@@ -112,7 +112,7 @@ function CocktailDrawer({ cocktail, onClose }) {
           {/* Ingredients */}
           <div className="flex-1 overflow-y-auto p-4">
             <h3 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">
-              Ingr\u00e9dients
+              Ingr\édients
             </h3>
             <ul className="space-y-2">
               {cocktail.ingredients?.map((ing, index) => {

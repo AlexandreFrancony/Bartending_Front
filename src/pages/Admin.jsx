@@ -67,10 +67,10 @@ function Admin() {
       toast.success(
         newInStock
           ? `${ingredient.name} en stock`
-          : `${ingredient.name} \u00e9puis\u00e9`
+          : `${ingredient.name} épuisé`
       );
     } catch (error) {
-      toast.error('Erreur lors de la mise \u00e0 jour');
+      toast.error('Erreur lors de la mise à jour');
     }
   };
 
@@ -98,19 +98,19 @@ function Admin() {
           console.warn(`Could not create ingredient ${ing.name}:`, error.message);
         }
       }
-      toast.success(`${data.newIngredients.length} ingr\u00e9dient(s) cr\u00e9\u00e9(s)`);
+      toast.success(`${data.newIngredients.length} ingrédient(s) créé(s)`);
     }
 
     if (isCreatingCocktail) {
       await createCocktail(data);
-      toast.success(`${data.name} cr\u00e9\u00e9`);
+      toast.success(`${data.name} créé`);
     } else {
       await updateCocktail(data.id, {
         name: data.name,
         image: data.image,
         ingredients: data.ingredients,
       });
-      toast.success(`${data.name} modifi\u00e9`);
+      toast.success(`${data.name} modifié`);
     }
     // Reload data
     await loadData();
@@ -204,7 +204,7 @@ function Admin() {
           <p className="text-2xl font-bold text-[var(--accent)]">
             {inStockCount}
           </p>
-          <p className="text-xs text-[var(--text-muted)]">Ingr\u00e9dients</p>
+          <p className="text-xs text-[var(--text-muted)]">Ingrédients</p>
         </div>
         <div className="bg-[var(--bg-card)] rounded-xl p-3 text-center">
           <p className="text-2xl font-bold text-[var(--status-yellow-text)]">
@@ -261,7 +261,7 @@ function Admin() {
                 type="text"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                placeholder="Rechercher un ingr\u00e9dient..."
+                placeholder="Rechercher un ingrédient..."
                 className="w-full pl-10 pr-4 py-2 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] text-sm"
               />
             </div>
@@ -277,7 +277,7 @@ function Admin() {
               ))
             ) : sortedCategories.length === 0 ? (
               <div className="text-center py-8">
-                <p className="text-[var(--text-muted)]">Aucun ingr\u00e9dient trouv\u00e9</p>
+                <p className="text-[var(--text-muted)]">Aucun ingrédient trouvé</p>
               </div>
             ) : (
               sortedCategories.map((category) => {
@@ -336,7 +336,7 @@ function Admin() {
                               ) : (
                                 <>
                                   <FiX size={12} />
-                                  \u00c9puis\u00e9
+                                  Épuisé
                                 </>
                               )}
                             </button>
@@ -399,7 +399,7 @@ function Admin() {
 
                   {cocktail.available && (
                     <div className="text-sm text-[var(--text-muted)]">
-                      {cocktail.ingredients?.length || 0} ingr\u00e9dients
+                      {cocktail.ingredients?.length || 0} ingrédients
                     </div>
                   )}
                 </div>
@@ -440,7 +440,7 @@ function Admin() {
                       {cocktail.name}
                     </h3>
                     <p className="text-sm text-[var(--text-muted)]">
-                      {cocktail.ingredients?.length || 0} ingr\u00e9dients
+                      {cocktail.ingredients?.length || 0} ingrédients
                     </p>
                   </div>
                   <button

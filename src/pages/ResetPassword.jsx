@@ -67,18 +67,18 @@ function ResetPassword() {
   // No token provided
   if (!token) {
     return (
-      <div className="min-h-dvh bg-gray-50 dark:bg-gray-900 flex flex-col justify-center px-4 py-12">
+      <div className="min-h-dvh bg-[var(--bg-primary)] flex flex-col justify-center px-4 py-12">
         <div className="mx-auto w-full max-w-sm text-center">
           <div className="text-6xl mb-4">🔗</div>
-          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+          <h1 className="text-2xl font-bold text-[var(--text-primary)] mb-2">
             Lien invalide
           </h1>
-          <p className="text-gray-600 dark:text-gray-400 mb-6">
+          <p className="text-[var(--text-secondary)] mb-6">
             Ce lien de réinitialisation est invalide ou a expiré.
           </p>
           <Link
             to="/forgot-password"
-            className="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:underline"
+            className="inline-flex items-center gap-2 text-[var(--accent)] hover:underline"
           >
             Demander un nouveau lien
           </Link>
@@ -88,12 +88,12 @@ function ResetPassword() {
   }
 
   return (
-    <div className="min-h-dvh bg-gray-50 dark:bg-gray-900 flex flex-col justify-center px-4 py-12">
+    <div className="min-h-dvh bg-[var(--bg-primary)] flex flex-col justify-center px-4 py-12">
       <div className="mx-auto w-full max-w-sm">
         {/* Back link */}
         <Link
           to="/login"
-          className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mb-8"
+          className="inline-flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] mb-8"
         >
           <FiArrowLeft size={20} />
           Retour à la connexion
@@ -101,10 +101,10 @@ function ResetPassword() {
 
         {/* Title */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-3xl font-bold text-[var(--text-primary)]">
             Nouveau mot de passe
           </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-[var(--text-secondary)]">
             {success
               ? 'Votre mot de passe a été réinitialisé'
               : 'Choisissez votre nouveau mot de passe'}
@@ -113,12 +113,12 @@ function ResetPassword() {
 
         {success ? (
           /* Success message */
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-6 text-center">
+          <div className="bg-[var(--status-green-bg)] border border-[var(--status-green-text)]/30 rounded-xl p-6 text-center">
             <div className="text-4xl mb-4">✅</div>
-            <p className="text-green-800 dark:text-green-200">
+            <p className="text-[var(--status-green-text)]">
               Votre mot de passe a été réinitialisé avec succès !
             </p>
-            <p className="text-green-600 dark:text-green-400 text-sm mt-4">
+            <p className="text-[var(--status-green-text)] text-sm mt-4">
               Redirection vers la page de connexion...
             </p>
           </div>
@@ -128,7 +128,7 @@ function ResetPassword() {
             <div>
               <label
                 htmlFor="password"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="block text-sm font-medium text-[var(--text-secondary)] mb-1"
               >
                 Nouveau mot de passe
               </label>
@@ -140,13 +140,13 @@ function ResetPassword() {
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Minimum 8 caractères"
                   autoComplete="new-password"
-                  className="w-full px-4 py-3 pl-12 pr-12 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 pl-12 pr-12 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                 />
-                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" size={20} />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
                 >
                   {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
                 </button>
@@ -156,7 +156,7 @@ function ResetPassword() {
             <div>
               <label
                 htmlFor="confirmPassword"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="block text-sm font-medium text-[var(--text-secondary)] mb-1"
               >
                 Confirmer le mot de passe
               </label>
@@ -168,16 +168,16 @@ function ResetPassword() {
                   onChange={(e) => setConfirmPassword(e.target.value)}
                   placeholder="Répétez le mot de passe"
                   autoComplete="new-password"
-                  className="w-full px-4 py-3 pl-12 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 pl-12 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                 />
-                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" size={20} />
               </div>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 px-4 rounded-xl bg-[var(--accent)] text-white font-medium hover:bg-[var(--accent-hover)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Réinitialisation...' : 'Réinitialiser le mot de passe'}
             </button>

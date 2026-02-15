@@ -34,7 +34,7 @@ function MenuCocktailDrawer({ cocktail, onClose }) {
 
       {/* Drawer */}
       <div className="fixed inset-x-0 bottom-0 z-50 animate-slide-up">
-        <div className="bg-white dark:bg-gray-800 rounded-t-2xl max-h-[85vh] overflow-hidden flex flex-col safe-bottom">
+        <div className="bg-[var(--bg-card)] rounded-t-2xl max-h-[85vh] overflow-hidden flex flex-col safe-bottom">
           {/* Image */}
           {imageUrl && (
             <div className="relative h-48 flex-shrink-0">
@@ -58,21 +58,21 @@ function MenuCocktailDrawer({ cocktail, onClose }) {
             {/* Header */}
             <div className="flex items-start justify-between mb-4">
               <div>
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                <h2 className="text-xl font-bold text-[var(--text-primary)]">
                   {cocktail.name}
                 </h2>
                 <span
                   className={`inline-block mt-1 px-2 py-0.5 rounded-full text-xs font-medium ${
                     hasAlcohol
-                      ? 'bg-amber-100 dark:bg-amber-900/30 text-amber-700 dark:text-amber-400'
-                      : 'bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400'
+                      ? 'bg-[var(--status-amber-bg)] text-[var(--status-amber-text)]'
+                      : 'bg-[var(--status-green-bg)] text-[var(--status-green-text)]'
                   }`}
                 >
                   {hasAlcohol ? 'Avec alcool' : 'Sans alcool'}
                 </span>
               </div>
               {!cocktail.available && (
-                <span className="px-2 py-1 bg-red-100 dark:bg-red-900/30 text-red-700 dark:text-red-400 text-xs font-medium rounded-lg">
+                <span className="px-2 py-1 bg-[var(--status-red-bg)] text-[var(--status-red-text)] text-xs font-medium rounded-lg">
                   Indisponible
                 </span>
               )}
@@ -80,19 +80,19 @@ function MenuCocktailDrawer({ cocktail, onClose }) {
 
             {/* Ingredients */}
             <div className="mb-6">
-              <h3 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-2">
+              <h3 className="text-sm font-medium text-[var(--text-muted)] mb-2">
                 Ingrédients
               </h3>
               <div className="space-y-2">
                 {cocktail.ingredients?.map((ing, idx) => (
                   <div
                     key={idx}
-                    className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700 last:border-0"
+                    className="flex items-center justify-between py-2 border-b border-[var(--border)] last:border-0"
                   >
-                    <span className="text-gray-900 dark:text-white">
+                    <span className="text-[var(--text-primary)]">
                       {ing.name}
                     </span>
-                    <span className="text-gray-500 dark:text-gray-400 text-sm">
+                    <span className="text-[var(--text-muted)] text-sm">
                       {ing.quantity}
                     </span>
                   </div>
@@ -101,21 +101,21 @@ function MenuCocktailDrawer({ cocktail, onClose }) {
             </div>
 
             {/* Login prompt */}
-            <div className="bg-blue-50 dark:bg-blue-900/20 rounded-xl p-4 text-center">
-              <p className="text-blue-800 dark:text-blue-200 mb-3">
+            <div className="bg-[var(--bg-input)] rounded-xl p-4 text-center">
+              <p className="text-[var(--text-primary)] mb-3">
                 Connectez-vous pour commander ce cocktail
               </p>
               <div className="flex gap-2 justify-center">
                 <Link
                   to="/login"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 flex items-center gap-2"
+                  className="px-4 py-2 bg-[var(--accent)] text-white rounded-lg font-medium hover:bg-[var(--accent-hover)] flex items-center gap-2"
                 >
                   <FiLogIn size={18} />
                   Se connecter
                 </Link>
                 <Link
                   to="/register"
-                  className="px-4 py-2 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 rounded-lg font-medium hover:bg-gray-50 dark:hover:bg-gray-600 border border-gray-200 dark:border-gray-600"
+                  className="px-4 py-2 bg-[var(--bg-card)] text-[var(--text-secondary)] rounded-lg font-medium hover:bg-[var(--bg-input)] border border-[var(--border)]"
                 >
                   Créer un compte
                 </Link>
@@ -204,13 +204,13 @@ function Menu() {
   return (
     <PageWrapper className="pb-24">
       {/* Header */}
-      <div className="px-4 py-3 flex items-center justify-between border-b border-gray-200 dark:border-gray-700">
-        <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+      <div className="px-4 py-3 flex items-center justify-between border-b border-[var(--border)]">
+        <h1 className="text-xl font-bold text-[var(--text-primary)]">
           🍹 Menu
         </h1>
         <Link
           to="/login"
-          className="px-3 py-1.5 bg-blue-600 text-white text-sm font-medium rounded-lg hover:bg-blue-700 flex items-center gap-1.5"
+          className="px-3 py-1.5 bg-[var(--accent)] text-white text-sm font-medium rounded-lg hover:bg-[var(--accent-hover)] flex items-center gap-1.5"
         >
           <FiLogIn size={16} />
           Connexion
@@ -218,20 +218,20 @@ function Menu() {
       </div>
 
       {/* Search and filters */}
-      <div className="sticky top-0 z-20 bg-gray-50 dark:bg-gray-900 px-4 py-3 space-y-3">
+      <div className="sticky top-0 z-20 bg-[var(--bg-primary)] px-4 py-3 space-y-3">
         <div className="relative">
-          <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+          <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" size={20} />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Rechercher un cocktail..."
-            className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           />
           {search && (
             <button
               onClick={() => setSearch('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
             >
               <FiX size={20} />
             </button>
@@ -245,8 +245,8 @@ function Menu() {
               onClick={() => setFilter(option.value)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
                 filter === option.value
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  ? 'bg-[var(--accent)] text-white'
+                  : 'bg-[var(--bg-card)] text-[var(--text-secondary)] border border-[var(--border)] hover:bg-[var(--bg-input)]'
               }`}
             >
               {option.label}
@@ -262,18 +262,18 @@ function Menu() {
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
-                className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden animate-pulse"
+                className="bg-[var(--bg-card)] rounded-xl overflow-hidden animate-pulse"
               >
-                <div className="aspect-square bg-gray-200 dark:bg-gray-700" />
+                <div className="aspect-square bg-[var(--bg-input)]" />
                 <div className="p-3">
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mx-auto" />
+                  <div className="h-4 bg-[var(--bg-input)] rounded w-3/4 mx-auto" />
                 </div>
               </div>
             ))}
           </div>
         ) : filteredCocktails.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-[var(--text-muted)]">
               {search
                 ? 'Aucun cocktail trouvé pour cette recherche'
                 : 'Aucun cocktail disponible'}
@@ -293,17 +293,17 @@ function Menu() {
       </div>
 
       {/* Bottom CTA */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 px-4 pt-4 pb-4 safe-bottom z-30">
+      <div className="fixed bottom-0 left-0 right-0 bg-[var(--bg-card)] border-t border-[var(--border)] px-4 pt-4 pb-4 safe-bottom z-30">
         <div className="flex gap-3 max-w-md mx-auto">
           <Link
             to="/login"
-            className="flex-1 py-3 px-4 bg-blue-600 text-white font-medium rounded-xl text-center hover:bg-blue-700"
+            className="flex-1 py-3 px-4 bg-[var(--accent)] text-white font-medium rounded-xl text-center hover:bg-[var(--accent-hover)]"
           >
             Se connecter
           </Link>
           <Link
             to="/register"
-            className="flex-1 py-3 px-4 bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium rounded-xl text-center border border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-600"
+            className="flex-1 py-3 px-4 bg-[var(--bg-card)] text-[var(--text-secondary)] font-medium rounded-xl text-center border border-[var(--border)] hover:bg-[var(--bg-input)]"
           >
             Créer un compte
           </Link>

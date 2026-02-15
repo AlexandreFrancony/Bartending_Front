@@ -2,6 +2,71 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Terracota Cream Theme Variables */
+:root {
+  --bg-primary: #F5EFE0;
+  --bg-card: #EFE6D6;
+  --bg-header: #E8DECA;
+  --bg-input: #E8DECA;
+  --border: #D3C5AE;
+  --text-primary: #3E2E22;
+  --text-secondary: #5A4634;
+  --text-muted: #8A7A6A;
+  --accent: #C65F3C;
+  --accent-hover: #B34924;
+  --positive: #16a34a;
+  --negative: #dc2626;
+  --warning: #d97706;
+
+  /* Semantic status colors */
+  --status-green-bg: #dcfce7;
+  --status-green-text: #15803d;
+  --status-red-bg: #fee2e2;
+  --status-red-text: #dc2626;
+  --status-yellow-bg: #fef9c3;
+  --status-yellow-text: #a16207;
+  --status-blue-bg: #dbeafe;
+  --status-blue-text: #1d4ed8;
+  --status-purple-bg: #f3e8ff;
+  --status-purple-text: #7e22ce;
+  --status-amber-bg: #fef3c7;
+  --status-amber-text: #b45309;
+  --status-orange-bg: #ffedd5;
+  --status-orange-text: #c2410c;
+}
+
+.dark {
+  --bg-primary: #2A2018;
+  --bg-card: #382A20;
+  --bg-header: #231B14;
+  --bg-input: #3E2E22;
+  --border: #5A4634;
+  --text-primary: #F5EFE0;
+  --text-secondary: #E6D7C3;
+  --text-muted: #8A7A6A;
+  --accent: #C65F3C;
+  --accent-hover: #D87D5C;
+  --positive: #22c55e;
+  --negative: #ef4444;
+  --warning: #f59e0b;
+
+  /* Semantic status colors */
+  --status-green-bg: rgba(34, 197, 94, 0.15);
+  --status-green-text: #4ade80;
+  --status-red-bg: rgba(239, 68, 68, 0.15);
+  --status-red-text: #f87171;
+  --status-yellow-bg: rgba(250, 204, 21, 0.15);
+  --status-yellow-text: #facc15;
+  --status-blue-bg: rgba(59, 130, 246, 0.15);
+  --status-blue-text: #60a5fa;
+  --status-purple-bg: rgba(168, 85, 247, 0.15);
+  --status-purple-text: #c084fc;
+  --status-amber-bg: rgba(245, 158, 11, 0.15);
+  --status-amber-text: #fbbf24;
+  --status-orange-bg: rgba(249, 115, 22, 0.15);
+  --status-orange-text: #fb923c;
+}
+
 /* Global styles */
 * {
   box-sizing: border-box;
@@ -10,12 +75,13 @@
 html {
   scroll-behavior: smooth;
   /* Background for iOS browser transparent areas */
-  @apply bg-gray-800;
+  background-color: var(--bg-header);
 }
 
 body {
-  @apply bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-primary);
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   min-height: 100vh;
   min-height: 100dvh;
 }
@@ -41,15 +107,16 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-200 dark:bg-gray-800;
+  background-color: var(--bg-input);
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-400 dark:bg-gray-600 rounded-full;
+  background-color: var(--text-muted);
+  border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-500 dark:bg-gray-500;
+  background-color: var(--text-secondary);
 }
 
 /* Drawer backdrop */

@@ -20,7 +20,7 @@ function getImageUrl(imageName) {
 // Fallback component when image fails to load (e.g., ad blocker)
 function CocktailPlaceholder() {
   return (
-    <div className="w-full h-full flex items-center justify-center text-gray-400 dark:text-gray-500 bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-700 dark:to-gray-800">
+    <div className="w-full h-full flex items-center justify-center text-[var(--text-muted)] bg-gradient-to-br from-[var(--bg-input)] to-[var(--bg-card)]">
       <svg className="w-16 h-16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 22h8M12 11v11M19 3l-7 8-7-8h14zM5 3h14" />
       </svg>
@@ -47,10 +47,10 @@ function CocktailCard({ cocktail, onClick }) {
   return (
     <div
       onClick={onClick}
-      className="relative bg-white dark:bg-gray-800 rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer overflow-hidden group"
+      className="relative bg-[var(--bg-card)] rounded-xl shadow-sm hover:shadow-md transition-shadow cursor-pointer overflow-hidden group"
     >
       {/* Image */}
-      <div className="aspect-square bg-gray-100 dark:bg-gray-700 relative overflow-hidden">
+      <div className="aspect-square bg-[var(--bg-input)] relative overflow-hidden">
         {imageUrl && !imageError ? (
           <img
             src={imageUrl}
@@ -69,7 +69,7 @@ function CocktailCard({ cocktail, onClick }) {
           className={`absolute top-2 right-2 p-2 rounded-full transition-colors ${
             favorite
               ? 'bg-red-500 text-white'
-              : 'bg-white/80 dark:bg-gray-800/80 text-gray-600 dark:text-gray-300 hover:bg-white dark:hover:bg-gray-800'
+              : 'bg-[var(--bg-card)]/80 text-[var(--text-secondary)] hover:bg-[var(--bg-card)]'
           }`}
           aria-label={favorite ? 'Retirer des favoris' : 'Ajouter aux favoris'}
         >
@@ -98,7 +98,7 @@ function CocktailCard({ cocktail, onClick }) {
 
       {/* Name */}
       <div className="p-3">
-        <h3 className="font-medium text-gray-900 dark:text-white text-center truncate">
+        <h3 className="font-medium text-[var(--text-primary)] text-center truncate">
           {cocktail.name}
         </h3>
       </div>

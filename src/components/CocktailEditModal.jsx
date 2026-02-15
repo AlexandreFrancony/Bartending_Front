@@ -47,7 +47,7 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
 
     const validIngredients = ingredients.filter((ing) => ing.name.trim());
     if (validIngredients.length === 0) {
-      newErrors.ingredients = 'Au moins un ingrédient est requis';
+      newErrors.ingredients = 'Au moins un ingr\u00e9dient est requis';
     }
 
     setErrors(newErrors);
@@ -127,17 +127,17 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
           animate={{ y: 0 }}
           exit={{ y: '100%' }}
           transition={{ type: 'spring', damping: 25, stiffness: 300 }}
-          className="bg-white dark:bg-gray-800 w-full sm:max-w-lg sm:rounded-2xl rounded-t-2xl max-h-[90vh] overflow-hidden flex flex-col"
+          className="bg-[var(--bg-card)] w-full sm:max-w-lg sm:rounded-2xl rounded-t-2xl max-h-[90vh] overflow-hidden flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-            <h2 className="text-lg font-semibold text-gray-900 dark:text-white">
+          <div className="px-4 py-3 border-b border-[var(--border)] flex items-center justify-between">
+            <h2 className="text-lg font-semibold text-[var(--text-primary)]">
               {isCreating ? 'Nouvelle recette' : 'Modifier la recette'}
             </h2>
             <button
               onClick={onClose}
-              className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
+              className="p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] rounded-lg hover:bg-[var(--bg-input)]"
             >
               <FiX size={20} />
             </button>
@@ -147,7 +147,7 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
           <div className="flex-1 overflow-y-auto p-4 space-y-4">
             {/* Name */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1">
                 Nom du cocktail *
               </label>
               <input
@@ -158,8 +158,8 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
                 className={`w-full px-3 py-2 rounded-xl border ${
                   errors.name
                     ? 'border-red-500'
-                    : 'border-gray-200 dark:border-gray-700'
-                } bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400`}
+                    : 'border-[var(--border)]'
+                } bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)]`}
               />
               {errors.name && (
                 <p className="mt-1 text-sm text-red-500">{errors.name}</p>
@@ -168,7 +168,7 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
 
             {/* Image */}
             <div>
-              <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              <label className="block text-sm font-medium text-[var(--text-secondary)] mb-1">
                 Image (URL)
               </label>
               <input
@@ -176,20 +176,20 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
                 value={image}
                 onChange={(e) => setImage(e.target.value)}
                 placeholder="Ex: mojito.jpg"
-                className="w-full px-3 py-2 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400"
+                className="w-full px-3 py-2 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)]"
               />
             </div>
 
             {/* Ingredients */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  Ingrédients *
+                <label className="block text-sm font-medium text-[var(--text-secondary)]">
+                  Ingr\u00e9dients *
                 </label>
                 <button
                   type="button"
                   onClick={addIngredient}
-                  className="flex items-center gap-1 text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300"
+                  className="flex items-center gap-1 text-sm text-[var(--accent)] hover:text-[var(--accent-hover)]"
                 >
                   <FiPlus size={16} />
                   Ajouter
@@ -204,7 +204,7 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
                 {ingredients.map((ingredient, index) => (
                   <div
                     key={index}
-                    className="bg-gray-50 dark:bg-gray-900 rounded-xl p-3 space-y-2"
+                    className="bg-[var(--bg-primary)] rounded-xl p-3 space-y-2"
                   >
                     <div className="flex items-center gap-2">
                       <input
@@ -213,14 +213,14 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
                         onChange={(e) =>
                           updateIngredient(index, 'name', e.target.value)
                         }
-                        placeholder="Nom de l'ingrédient"
-                        className="flex-1 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 text-sm"
+                        placeholder="Nom de l'ingr\u00e9dient"
+                        className="flex-1 px-3 py-2 rounded-lg border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] text-sm"
                       />
                       {ingredients.length > 1 && (
                         <button
                           type="button"
                           onClick={() => removeIngredient(index)}
-                          className="p-2 text-red-500 hover:text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg"
+                          className="p-2 text-red-500 hover:text-red-600 hover:bg-[var(--status-red-bg)] rounded-lg"
                         >
                           <FiTrash2 size={16} />
                         </button>
@@ -234,15 +234,15 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
                         onChange={(e) =>
                           updateIngredient(index, 'quantity', e.target.value)
                         }
-                        placeholder="Quantité (ex: 4 cl)"
-                        className="w-1/3 min-w-0 px-3 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 text-sm"
+                        placeholder="Quantit\u00e9 (ex: 4 cl)"
+                        className="w-1/3 min-w-0 px-3 py-2 rounded-lg border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] text-sm"
                       />
                       <select
                         value={ingredient.category}
                         onChange={(e) =>
                           updateIngredient(index, 'category', e.target.value)
                         }
-                        className="w-2/3 min-w-0 px-2 py-2 rounded-lg border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white text-sm truncate"
+                        className="w-2/3 min-w-0 px-2 py-2 rounded-lg border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] text-sm truncate"
                       >
                         {categories.map((cat) => (
                           <option key={cat.value} value={cat.value}>
@@ -257,29 +257,29 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
             </div>
 
             {errors.submit && (
-              <div className="p-3 bg-red-50 dark:bg-red-900/20 rounded-xl text-red-600 dark:text-red-400 text-sm">
+              <div className="p-3 bg-[var(--status-red-bg)] rounded-xl text-[var(--status-red-text)] text-sm">
                 {errors.submit}
               </div>
             )}
 
             {/* New Ingredients Warning */}
             {newIngredientsWarning && (
-              <div className="p-4 bg-yellow-50 dark:bg-yellow-900/20 rounded-xl border border-yellow-200 dark:border-yellow-800">
+              <div className="p-4 bg-[var(--status-yellow-bg)] rounded-xl border border-[var(--status-yellow-text)]/30">
                 <div className="flex items-start gap-3">
-                  <FiAlertTriangle className="text-yellow-600 dark:text-yellow-400 mt-0.5 flex-shrink-0" size={20} />
+                  <FiAlertTriangle className="text-[var(--status-yellow-text)] mt-0.5 flex-shrink-0" size={20} />
                   <div className="flex-1">
-                    <p className="font-medium text-yellow-800 dark:text-yellow-200">
-                      Nouveaux ingrédients détectés
+                    <p className="font-medium text-[var(--status-yellow-text)]">
+                      Nouveaux ingr\u00e9dients d\u00e9tect\u00e9s
                     </p>
-                    <p className="text-sm text-yellow-700 dark:text-yellow-300 mt-1">
-                      Les ingrédients suivants n'existent pas encore et seront créés :
+                    <p className="text-sm text-[var(--status-yellow-text)] mt-1">
+                      Les ingr\u00e9dients suivants n'existent pas encore et seront cr\u00e9\u00e9s :
                     </p>
                     <ul className="mt-2 space-y-1">
                       {newIngredientsWarning.map((ing, idx) => (
-                        <li key={idx} className="text-sm text-yellow-800 dark:text-yellow-200 flex items-center gap-2">
+                        <li key={idx} className="text-sm text-[var(--status-yellow-text)] flex items-center gap-2">
                           <span className="w-2 h-2 bg-yellow-500 rounded-full" />
                           <span className="font-medium">{ing.name}</span>
-                          <span className="text-yellow-600 dark:text-yellow-400">({ing.category})</span>
+                          <span className="text-[var(--status-yellow-text)]">({ing.category})</span>
                         </li>
                       ))}
                     </ul>
@@ -287,7 +287,7 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
                       <button
                         type="button"
                         onClick={cancelNewIngredients}
-                        className="px-3 py-1.5 text-sm rounded-lg border border-yellow-300 dark:border-yellow-700 text-yellow-800 dark:text-yellow-200 hover:bg-yellow-100 dark:hover:bg-yellow-900/30"
+                        className="px-3 py-1.5 text-sm rounded-lg border border-[var(--status-yellow-text)]/30 text-[var(--status-yellow-text)] hover:bg-[var(--status-yellow-bg)]"
                       >
                         Corriger
                       </button>
@@ -296,7 +296,7 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
                         onClick={confirmNewIngredients}
                         className="px-3 py-1.5 text-sm rounded-lg bg-yellow-600 text-white hover:bg-yellow-700"
                       >
-                        Créer et continuer
+                        Cr\u00e9er et continuer
                       </button>
                     </div>
                   </div>
@@ -306,11 +306,11 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
           </div>
 
           {/* Footer */}
-          <div className="px-4 py-3 border-t border-gray-200 dark:border-gray-700 flex gap-3">
+          <div className="px-4 py-3 border-t border-[var(--border)] flex gap-3">
             <button
               type="button"
               onClick={onClose}
-              className="flex-1 py-2.5 px-4 rounded-xl border border-gray-200 dark:border-gray-700 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+              className="flex-1 py-2.5 px-4 rounded-xl border border-[var(--border)] text-[var(--text-secondary)] font-medium hover:bg-[var(--bg-input)] transition-colors"
             >
               Annuler
             </button>
@@ -318,7 +318,7 @@ function CocktailEditModal({ cocktail, onClose, onSave, isCreating, existingIngr
               type="button"
               onClick={() => handleSave()}
               disabled={saving}
-              className="flex-1 py-2.5 px-4 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
+              className="flex-1 py-2.5 px-4 rounded-xl bg-[var(--accent)] text-white font-medium hover:bg-[var(--accent-hover)] transition-colors disabled:opacity-50 flex items-center justify-center gap-2"
             >
               {saving ? (
                 'Enregistrement...'

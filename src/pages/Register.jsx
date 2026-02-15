@@ -59,14 +59,14 @@ function Register() {
   };
 
   return (
-    <div className="min-h-dvh bg-gray-50 dark:bg-gray-900 flex flex-col justify-center px-4 py-12">
+    <div className="min-h-dvh bg-[var(--bg-primary)] flex flex-col justify-center px-4 py-12">
       <div className="mx-auto w-full max-w-sm">
         {/* Logo/Title */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-3xl font-bold text-[var(--text-primary)]">
             🍹 Tipsy Bar
           </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-[var(--text-secondary)]">
             Créez votre compte
           </p>
         </div>
@@ -76,7 +76,7 @@ function Register() {
           <div>
             <label
               htmlFor="username"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              className="block text-sm font-medium text-[var(--text-secondary)] mb-1"
             >
               Nom d'utilisateur
             </label>
@@ -87,14 +87,14 @@ function Register() {
               onChange={(e) => setUsername(e.target.value)}
               placeholder="Choisissez un pseudo"
               autoComplete="username"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
             />
           </div>
 
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              className="block text-sm font-medium text-[var(--text-secondary)] mb-1"
             >
               Email
             </label>
@@ -105,14 +105,14 @@ function Register() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="votre@email.com"
               autoComplete="email"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
             />
           </div>
 
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              className="block text-sm font-medium text-[var(--text-secondary)] mb-1"
             >
               Mot de passe
             </label>
@@ -124,12 +124,12 @@ function Register() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Créez un mot de passe"
                 autoComplete="new-password"
-                className="w-full px-4 py-3 pr-12 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 pr-12 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
               >
                 {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
               </button>
@@ -142,8 +142,8 @@ function Register() {
                     key={i}
                     className={`flex items-center gap-2 text-sm ${
                       req.met
-                        ? 'text-green-600 dark:text-green-400'
-                        : 'text-gray-400'
+                        ? 'text-[var(--status-green-text)]'
+                        : 'text-[var(--text-muted)]'
                     }`}
                   >
                     {req.met ? <FiCheck size={14} /> : <FiX size={14} />}
@@ -157,7 +157,7 @@ function Register() {
           <div>
             <label
               htmlFor="confirmPassword"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              className="block text-sm font-medium text-[var(--text-secondary)] mb-1"
             >
               Confirmer le mot de passe
             </label>
@@ -168,10 +168,10 @@ function Register() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirmez votre mot de passe"
               autoComplete="new-password"
-              className={`w-full px-4 py-3 rounded-xl border bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              className={`w-full px-4 py-3 rounded-xl border bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] ${
                 confirmPassword && confirmPassword !== password
                   ? 'border-red-500'
-                  : 'border-gray-200 dark:border-gray-700'
+                  : 'border-[var(--border)]'
               }`}
             />
             {confirmPassword && confirmPassword !== password && (
@@ -184,7 +184,7 @@ function Register() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-4 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full py-3 px-4 rounded-xl bg-[var(--accent)] text-white font-medium hover:bg-[var(--accent-hover)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {loading ? (
               'Création...'
@@ -199,18 +199,18 @@ function Register() {
 
         {/* Links */}
         <div className="mt-6 space-y-3 text-center">
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-[var(--text-secondary)]">
             Déjà un compte ?{' '}
             <Link
               to="/login"
-              className="text-blue-600 dark:text-blue-400 font-medium hover:underline"
+              className="text-[var(--accent)] font-medium hover:underline"
             >
               Se connecter
             </Link>
           </p>
           <Link
             to="/menu"
-            className="block text-gray-500 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+            className="block text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
           >
             Voir le menu sans compte →
           </Link>

@@ -23,13 +23,13 @@ function UserDisplay() {
   if (!user) return null;
 
   return (
-    <div className="flex items-center justify-between px-4 py-3 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700 safe-top">
+    <div className="flex items-center justify-between px-4 py-3 bg-[var(--bg-card)] border-b border-[var(--border)] safe-top">
       <div className="flex items-center gap-2">
-        <span className="text-lg font-semibold text-gray-900 dark:text-white">
+        <span className="text-lg font-semibold text-[var(--text-primary)]">
           {user.username}
         </span>
         {user.role === 'admin' && (
-          <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400">
+          <span className="px-2 py-0.5 text-xs font-medium rounded-full bg-[var(--status-purple-bg)] text-[var(--status-purple-text)]">
             Admin
           </span>
         )}
@@ -38,16 +38,16 @@ function UserDisplay() {
       <div className="flex items-center gap-1">
         <button
           onClick={handleToggleTheme}
-          className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-          aria-label="Changer de thème"
+          className="p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] rounded-full hover:bg-[var(--bg-input)] transition-colors"
+          aria-label="Changer de th\u00e8me"
         >
           {isDark ? <FiSun size={20} /> : <FiMoon size={20} />}
         </button>
 
         <button
           onClick={handleLogout}
-          className="p-2 text-gray-500 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-          aria-label="Se déconnecter"
+          className="p-2 text-[var(--text-muted)] hover:text-[var(--status-red-text)] rounded-full hover:bg-[var(--bg-input)] transition-colors"
+          aria-label="Se d\u00e9connecter"
         >
           <FiLogOut size={20} />
         </button>

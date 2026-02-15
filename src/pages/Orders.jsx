@@ -7,11 +7,11 @@ import BottomNav from '../components/BottomNav';
 import toast from 'react-hot-toast';
 
 const statusConfig = {
-  pending: { label: 'En attente', color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400', icon: FiClock },
-  preparing: { label: 'En préparation', color: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400', icon: FiRefreshCw },
-  ready: { label: 'Prêt', color: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400', icon: FiCheck },
-  completed: { label: 'Servi', color: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300', icon: FiCheck },
-  cancelled: { label: 'Annulé', color: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400', icon: FiX },
+  pending: { label: 'En attente', color: 'bg-[var(--status-yellow-bg)] text-[var(--status-yellow-text)]', icon: FiClock },
+  preparing: { label: 'En préparation', color: 'bg-[var(--status-blue-bg)] text-[var(--status-blue-text)]', icon: FiRefreshCw },
+  ready: { label: 'Prêt', color: 'bg-[var(--status-green-bg)] text-[var(--status-green-text)]', icon: FiCheck },
+  completed: { label: 'Servi', color: 'bg-[var(--bg-input)] text-[var(--text-primary)]', icon: FiCheck },
+  cancelled: { label: 'Annulé', color: 'bg-[var(--status-red-bg)] text-[var(--status-red-text)]', icon: FiX },
 };
 
 function Orders() {
@@ -93,14 +93,14 @@ function Orders() {
       <UserDisplay />
 
       {/* Header */}
-      <div className="px-4 py-3 flex items-center justify-between border-b border-gray-200 dark:border-gray-700">
-        <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+      <div className="px-4 py-3 flex items-center justify-between border-b border-[var(--border)]">
+        <h1 className="text-xl font-bold text-[var(--text-primary)]">
           Commandes
         </h1>
         <div className="flex gap-2">
           <button
             onClick={loadOrders}
-            className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] rounded-lg hover:bg-[var(--bg-input)]"
             aria-label="Actualiser"
           >
             <FiRefreshCw size={20} />
@@ -108,7 +108,7 @@ function Orders() {
           {orders.length > 0 && (
             <button
               onClick={handleDeleteAll}
-              className="p-2 text-red-500 hover:text-red-700 dark:hover:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/20"
+              className="p-2 text-red-500 hover:text-[var(--status-red-text)] rounded-lg hover:bg-[var(--status-red-bg)]"
               aria-label="Tout supprimer"
             >
               <FiTrash2 size={20} />
@@ -129,8 +129,8 @@ function Orders() {
             onClick={() => setFilter(option.value)}
             className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
               filter === option.value
-                ? 'bg-blue-600 text-white'
-                : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700'
+                ? 'bg-[var(--accent)] text-white'
+                : 'bg-[var(--bg-card)] text-[var(--text-secondary)] border border-[var(--border)]'
             }`}
           >
             {option.label}
@@ -144,15 +144,15 @@ function Orders() {
           [...Array(3)].map((_, i) => (
             <div
               key={i}
-              className="bg-white dark:bg-gray-800 rounded-xl p-4 animate-pulse"
+              className="bg-[var(--bg-card)] rounded-xl p-4 animate-pulse"
             >
-              <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-2" />
-              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2" />
+              <div className="h-5 bg-[var(--bg-input)] rounded w-1/3 mb-2" />
+              <div className="h-4 bg-[var(--bg-input)] rounded w-1/2" />
             </div>
           ))
         ) : filteredOrders.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-[var(--text-muted)]">
               Aucune commande {filter === 'active' ? 'en cours' : ''}
             </p>
           </div>
@@ -164,15 +164,15 @@ function Orders() {
             return (
               <div
                 key={order.id}
-                className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm"
+                className="bg-[var(--bg-card)] rounded-xl p-4 shadow-sm"
               >
                 {/* Header */}
                 <div className="flex items-start justify-between mb-3">
                   <div>
-                    <h3 className="font-semibold text-gray-900 dark:text-white">
+                    <h3 className="font-semibold text-[var(--text-primary)]">
                       {order.cocktail_name}
                     </h3>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                    <p className="text-sm text-[var(--text-muted)]">
                       {order.customer_name} • {formatTime(order.created_at)}
                     </p>
                   </div>
@@ -186,18 +186,18 @@ function Orders() {
 
                 {/* Notes */}
                 {order.notes && (
-                  <p className="text-sm text-amber-600 dark:text-amber-400 mb-3 italic">
+                  <p className="text-sm text-[var(--status-amber-text)] mb-3 italic">
                     📝 {order.notes}
                   </p>
                 )}
 
                 {/* Actions */}
                 {!['completed', 'cancelled'].includes(order.status) && (
-                  <div className="flex gap-2 pt-2 border-t border-gray-100 dark:border-gray-700">
+                  <div className="flex gap-2 pt-2 border-t border-[var(--border)]">
                     {order.status === 'pending' && (
                       <button
                         onClick={() => handleStatusChange(order.id, 'preparing')}
-                        className="flex-1 py-2 px-3 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 rounded-lg text-sm font-medium hover:bg-blue-200 dark:hover:bg-blue-900/50 transition-colors"
+                        className="flex-1 py-2 px-3 bg-[var(--status-blue-bg)] text-[var(--status-blue-text)] rounded-lg text-sm font-medium hover:bg-[var(--status-blue-bg)] transition-colors"
                       >
                         Commencer
                       </button>
@@ -205,7 +205,7 @@ function Orders() {
                     {order.status === 'preparing' && (
                       <button
                         onClick={() => handleStatusChange(order.id, 'ready')}
-                        className="flex-1 py-2 px-3 bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 rounded-lg text-sm font-medium hover:bg-green-200 dark:hover:bg-green-900/50 transition-colors"
+                        className="flex-1 py-2 px-3 bg-[var(--status-green-bg)] text-[var(--status-green-text)] rounded-lg text-sm font-medium hover:bg-[var(--status-green-bg)] transition-colors"
                       >
                         Prêt
                       </button>
@@ -213,20 +213,20 @@ function Orders() {
                     {order.status === 'ready' && (
                       <button
                         onClick={() => handleStatusChange(order.id, 'completed')}
-                        className="flex-1 py-2 px-3 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 rounded-lg text-sm font-medium hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                        className="flex-1 py-2 px-3 bg-[var(--bg-input)] text-[var(--text-secondary)] rounded-lg text-sm font-medium hover:bg-[var(--border)] transition-colors"
                       >
                         Servi
                       </button>
                     )}
                     <button
                       onClick={() => handleStatusChange(order.id, 'cancelled')}
-                      className="py-2 px-3 text-red-600 dark:text-red-400 rounded-lg text-sm font-medium hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors"
+                      className="py-2 px-3 text-[var(--status-red-text)] rounded-lg text-sm font-medium hover:bg-[var(--status-red-bg)] transition-colors"
                     >
                       Annuler
                     </button>
                     <button
                       onClick={() => handleDelete(order.id)}
-                      className="py-2 px-3 text-gray-400 hover:text-red-500 dark:hover:text-red-400 rounded-lg transition-colors"
+                      className="py-2 px-3 text-[var(--text-muted)] hover:text-[var(--status-red-text)] rounded-lg transition-colors"
                     >
                       <FiTrash2 size={18} />
                     </button>

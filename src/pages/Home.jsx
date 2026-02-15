@@ -114,21 +114,21 @@ function Home() {
       <UserDisplay />
 
       {/* Search and filters */}
-      <div className="sticky top-0 z-20 bg-gray-50 dark:bg-gray-900 px-4 py-3 space-y-3">
+      <div className="sticky top-0 z-20 bg-[var(--bg-primary)] px-4 py-3 space-y-3">
         {/* Search bar */}
         <div className="relative">
-          <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+          <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" size={20} />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Rechercher un cocktail ou ingrédient..."
-            className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
+            placeholder="Rechercher un cocktail ou ingr\u00e9dient..."
+            className="w-full pl-10 pr-10 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           />
           {search && (
             <button
               onClick={() => setSearch('')}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
             >
               <FiX size={20} />
             </button>
@@ -143,8 +143,8 @@ function Home() {
               onClick={() => setFilter(option.value)}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-colors ${
                 filter === option.value
-                  ? 'bg-blue-600 text-white'
-                  : 'bg-white dark:bg-gray-800 text-gray-600 dark:text-gray-300 border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-700'
+                  ? 'bg-[var(--accent)] text-white'
+                  : 'bg-[var(--bg-card)] text-[var(--text-secondary)] border border-[var(--border)] hover:bg-[var(--bg-input)]'
               }`}
             >
               {option.label}
@@ -160,20 +160,20 @@ function Home() {
             {[...Array(6)].map((_, i) => (
               <div
                 key={i}
-                className="bg-white dark:bg-gray-800 rounded-xl overflow-hidden animate-pulse"
+                className="bg-[var(--bg-card)] rounded-xl overflow-hidden animate-pulse"
               >
-                <div className="aspect-square bg-gray-200 dark:bg-gray-700" />
+                <div className="aspect-square bg-[var(--bg-input)]" />
                 <div className="p-3">
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mx-auto" />
+                  <div className="h-4 bg-[var(--bg-input)] rounded w-3/4 mx-auto" />
                 </div>
               </div>
             ))}
           </div>
         ) : filteredCocktails.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-[var(--text-muted)]">
               {search
-                ? 'Aucun cocktail trouvé pour cette recherche'
+                ? 'Aucun cocktail trouv\u00e9 pour cette recherche'
                 : 'Aucun cocktail disponible'}
             </p>
           </div>
@@ -206,7 +206,7 @@ function Home() {
       {!isAdmin && (
         <Link
           to="/my-orders"
-          className="fixed bottom-6 right-6 z-30 flex items-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-full shadow-lg transition-all hover:scale-105 active:scale-95"
+          className="fixed bottom-6 right-6 z-30 flex items-center gap-2 px-4 py-3 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white font-medium rounded-full shadow-lg transition-all hover:scale-105 active:scale-95"
         >
           <FiList size={20} />
           <span>Mes commandes</span>

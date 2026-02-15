@@ -17,14 +17,14 @@ function getImageUrl(imageName) {
   return null;
 }
 
-// Category colors and labels
+// Category colors and labels (semantic - keep as-is)
 const categoryStyles = {
-  Alcool: { bg: 'bg-red-100 dark:bg-red-900/30', text: 'text-red-700 dark:text-red-400' },
-  Fruits: { bg: 'bg-orange-100 dark:bg-orange-900/30', text: 'text-orange-700 dark:text-orange-400' },
-  Sucrant: { bg: 'bg-yellow-100 dark:bg-yellow-900/30', text: 'text-yellow-700 dark:text-yellow-400' },
-  Diluant: { bg: 'bg-blue-100 dark:bg-blue-900/30', text: 'text-blue-700 dark:text-blue-400' },
-  Garniture: { bg: 'bg-green-100 dark:bg-green-900/30', text: 'text-green-700 dark:text-green-400' },
-  JNPR: { bg: 'bg-purple-100 dark:bg-purple-900/30', text: 'text-purple-700 dark:text-purple-400' },
+  Alcool: { bg: 'bg-[var(--status-red-bg)]', text: 'text-[var(--status-red-text)]' },
+  Fruits: { bg: 'bg-[var(--status-orange-bg)]', text: 'text-[var(--status-orange-text)]' },
+  Sucrant: { bg: 'bg-[var(--status-yellow-bg)]', text: 'text-[var(--status-yellow-text)]' },
+  Diluant: { bg: 'bg-[var(--status-blue-bg)]', text: 'text-[var(--status-blue-text)]' },
+  Garniture: { bg: 'bg-[var(--status-green-bg)]', text: 'text-[var(--status-green-text)]' },
+  JNPR: { bg: 'bg-[var(--status-purple-bg)]', text: 'text-[var(--status-purple-text)]' },
 };
 
 function CocktailDrawer({ cocktail, onClose }) {
@@ -49,7 +49,7 @@ function CocktailDrawer({ cocktail, onClose }) {
     setIsOrdering(true);
     try {
       await createOrder(cocktail.id, notes.trim() || undefined);
-      toast.success(`${cocktail.name} commandé !`);
+      toast.success(`${cocktail.name} command\u00e9 !`);
       onClose();
     } catch (error) {
       toast.error(error.message || 'Erreur lors de la commande');
@@ -74,9 +74,9 @@ function CocktailDrawer({ cocktail, onClose }) {
 
       {/* Drawer */}
       <div className="fixed bottom-0 left-0 right-0 z-50 animate-slideUp">
-        <div className="bg-white dark:bg-gray-800 rounded-t-2xl max-h-[85vh] overflow-hidden flex flex-col safe-bottom">
+        <div className="bg-[var(--bg-card)] rounded-t-2xl max-h-[85vh] overflow-hidden flex flex-col safe-bottom">
           {/* Header with image */}
-          <div className="relative h-48 bg-gray-100 dark:bg-gray-700 flex-shrink-0">
+          <div className="relative h-48 bg-[var(--bg-input)] flex-shrink-0">
             {imageUrl ? (
               <img
                 src={imageUrl}
@@ -84,7 +84,7 @@ function CocktailDrawer({ cocktail, onClose }) {
                 className="w-full h-full object-cover"
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-400">
+              <div className="w-full h-full flex items-center justify-center text-[var(--text-muted)]">
                 <svg className="w-20 h-20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 22h8M12 11v11M19 3l-7 8-7-8h14zM5 3h14" />
                 </svg>
@@ -101,29 +101,29 @@ function CocktailDrawer({ cocktail, onClose }) {
             </button>
 
             {/* Gradient overlay */}
-            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white dark:from-gray-800 to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-[var(--bg-card)] to-transparent" />
 
             {/* Title */}
-            <h2 className="absolute bottom-3 left-4 right-4 text-2xl font-bold text-gray-900 dark:text-white">
+            <h2 className="absolute bottom-3 left-4 right-4 text-2xl font-bold text-[var(--text-primary)]">
               {cocktail.name}
             </h2>
           </div>
 
           {/* Ingredients */}
           <div className="flex-1 overflow-y-auto p-4">
-            <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
-              Ingrédients
+            <h3 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">
+              Ingr\u00e9dients
             </h3>
             <ul className="space-y-2">
               {cocktail.ingredients?.map((ing, index) => {
                 const style = categoryStyles[ing.category] || {
-                  bg: 'bg-gray-100 dark:bg-gray-700',
-                  text: 'text-gray-700 dark:text-gray-300',
+                  bg: 'bg-[var(--bg-input)]',
+                  text: 'text-[var(--text-secondary)]',
                 };
                 return (
                   <li
                     key={index}
-                    className="flex items-center justify-between py-2 border-b border-gray-100 dark:border-gray-700 last:border-0"
+                    className="flex items-center justify-between py-2 border-b border-[var(--border)] last:border-0"
                   >
                     <div className="flex items-center gap-2">
                       <span
@@ -131,11 +131,11 @@ function CocktailDrawer({ cocktail, onClose }) {
                       >
                         {ing.category}
                       </span>
-                      <span className="text-gray-900 dark:text-white">
+                      <span className="text-[var(--text-primary)]">
                         {ing.name}
                       </span>
                     </div>
-                    <span className="text-gray-500 dark:text-gray-400 text-sm">
+                    <span className="text-[var(--text-muted)] text-sm">
                       {ing.quantity}
                     </span>
                   </li>
@@ -153,21 +153,21 @@ function CocktailDrawer({ cocktail, onClose }) {
                 onChange={(e) => setNotes(e.target.value)}
                 placeholder="Notes (sans glace, plus de citron...)"
                 maxLength={100}
-                className="w-full px-3 py-2 text-sm rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-3 py-2 text-sm rounded-lg border border-[var(--border)] bg-[var(--bg-primary)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
               />
             </div>
           )}
 
           {/* Order button */}
-          <div className="p-4 border-t border-gray-200 dark:border-gray-700 flex-shrink-0">
+          <div className="p-4 border-t border-[var(--border)] flex-shrink-0">
             {isAuthenticated ? (
               <button
                 onClick={handleOrder}
                 disabled={isOrdering || !cocktail.available}
                 className={`w-full py-3 px-4 rounded-xl font-semibold text-white transition-colors ${
                   cocktail.available
-                    ? 'bg-blue-600 hover:bg-blue-700 active:bg-blue-800'
-                    : 'bg-gray-400 cursor-not-allowed'
+                    ? 'bg-[var(--accent)] hover:bg-[var(--accent-hover)] active:bg-[var(--accent-hover)]'
+                    : 'bg-[var(--text-muted)] cursor-not-allowed'
                 } disabled:opacity-50`}
               >
                 {isOrdering
@@ -178,12 +178,12 @@ function CocktailDrawer({ cocktail, onClose }) {
               </button>
             ) : (
               <div className="text-center">
-                <p className="text-gray-500 dark:text-gray-400 text-sm mb-2">
+                <p className="text-[var(--text-muted)] text-sm mb-2">
                   Connectez-vous pour commander ce cocktail
                 </p>
                 <a
                   href="/login"
-                  className="inline-block py-2.5 px-6 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors"
+                  className="inline-block py-2.5 px-6 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white font-medium rounded-xl transition-colors"
                 >
                   Se connecter
                 </a>

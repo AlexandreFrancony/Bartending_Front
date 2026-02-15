@@ -23,7 +23,7 @@ function Login() {
     setLoading(true);
     try {
       await authLogin({ login: login.trim(), password });
-      toast.success('Connexion réussie !');
+      toast.success('Connexion r\u00e9ussie !');
       navigate('/');
     } catch (error) {
       toast.error(error.message);
@@ -33,15 +33,15 @@ function Login() {
   };
 
   return (
-    <div className="min-h-dvh bg-gray-50 dark:bg-gray-900 flex flex-col justify-center px-4 py-12">
+    <div className="min-h-dvh bg-[var(--bg-primary)] flex flex-col justify-center px-4 py-12">
       <div className="mx-auto w-full max-w-sm">
         {/* Logo/Title */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            🍹 Tipsy Bar
+          <h1 className="text-3xl font-bold text-[var(--text-primary)]">
+            Tipsy Bar
           </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
-            Connectez-vous à votre compte
+          <p className="mt-2 text-[var(--text-secondary)]">
+            Connectez-vous \u00e0 votre compte
           </p>
         </div>
 
@@ -50,7 +50,7 @@ function Login() {
           <div>
             <label
               htmlFor="login"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              className="block text-sm font-medium text-[var(--text-secondary)] mb-1"
             >
               Nom d'utilisateur ou email
             </label>
@@ -61,14 +61,14 @@ function Login() {
               onChange={(e) => setLogin(e.target.value)}
               placeholder="Votre identifiant"
               autoComplete="username"
-              className="w-full px-4 py-3 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full px-4 py-3 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
             />
           </div>
 
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+              className="block text-sm font-medium text-[var(--text-secondary)] mb-1"
             >
               Mot de passe
             </label>
@@ -80,12 +80,12 @@ function Login() {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="Votre mot de passe"
                 autoComplete="current-password"
-                className="w-full px-4 py-3 pr-12 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-3 pr-12 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
               >
                 {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
               </button>
@@ -95,7 +95,7 @@ function Login() {
           <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-4 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
+            className="w-full py-3 px-4 rounded-xl bg-[var(--accent)] text-white font-medium hover:bg-[var(--accent-hover)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {loading ? (
               'Connexion...'
@@ -110,29 +110,29 @@ function Login() {
           <div className="text-right">
             <Link
               to="/forgot-password"
-              className="text-sm text-blue-600 dark:text-blue-400 hover:underline"
+              className="text-sm text-[var(--accent)] hover:underline"
             >
-              Mot de passe oublié ?
+              Mot de passe oubli\u00e9 ?
             </Link>
           </div>
         </form>
 
         {/* Links */}
         <div className="mt-6 space-y-3 text-center">
-          <p className="text-gray-600 dark:text-gray-400">
+          <p className="text-[var(--text-secondary)]">
             Pas encore de compte ?{' '}
             <Link
               to="/register"
-              className="text-blue-600 dark:text-blue-400 font-medium hover:underline"
+              className="text-[var(--accent)] font-medium hover:underline"
             >
-              Créer un compte
+              Cr\u00e9er un compte
             </Link>
           </p>
           <Link
             to="/menu"
-            className="block text-gray-500 dark:text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
+            className="block text-[var(--text-muted)] hover:text-[var(--text-secondary)]"
           >
-            Voir le menu sans compte →
+            Voir le menu sans compte &rarr;
           </Link>
         </div>
       </div>

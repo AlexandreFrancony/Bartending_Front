@@ -35,7 +35,7 @@ function ForgotPassword() {
       }
 
       setSent(true);
-      toast.success('Email envoyé !');
+      toast.success('Email envoy\u00e9 !');
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -44,38 +44,38 @@ function ForgotPassword() {
   };
 
   return (
-    <div className="min-h-dvh bg-gray-50 dark:bg-gray-900 flex flex-col justify-center px-4 py-12">
+    <div className="min-h-dvh bg-[var(--bg-primary)] flex flex-col justify-center px-4 py-12">
       <div className="mx-auto w-full max-w-sm">
         {/* Back link */}
         <Link
           to="/login"
-          className="inline-flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white mb-8"
+          className="inline-flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] mb-8"
         >
           <FiArrowLeft size={20} />
-          Retour à la connexion
+          Retour \u00e0 la connexion
         </Link>
 
         {/* Title */}
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 dark:text-white">
-            Mot de passe oublié
+          <h1 className="text-3xl font-bold text-[var(--text-primary)]">
+            Mot de passe oubli\u00e9
           </h1>
-          <p className="mt-2 text-gray-600 dark:text-gray-400">
+          <p className="mt-2 text-[var(--text-secondary)]">
             {sent
-              ? 'Vérifiez votre boîte mail'
-              : 'Entrez votre email pour recevoir un lien de réinitialisation'}
+              ? 'V\u00e9rifiez votre bo\u00eete mail'
+              : 'Entrez votre email pour recevoir un lien de r\u00e9initialisation'}
           </p>
         </div>
 
         {sent ? (
           /* Success message */
-          <div className="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-xl p-6 text-center">
-            <div className="text-4xl mb-4">📧</div>
-            <p className="text-green-800 dark:text-green-200">
-              Si un compte existe avec l'adresse <strong>{email}</strong>, vous recevrez un email avec les instructions pour réinitialiser votre mot de passe.
+          <div className="bg-[var(--status-green-bg)] border border-[var(--status-green-text)]/30 rounded-xl p-6 text-center">
+            <div className="text-4xl mb-4">&#128231;</div>
+            <p className="text-[var(--status-green-text)]">
+              Si un compte existe avec l'adresse <strong>{email}</strong>, vous recevrez un email avec les instructions pour r\u00e9initialiser votre mot de passe.
             </p>
-            <p className="text-green-600 dark:text-green-400 text-sm mt-4">
-              N'oubliez pas de vérifier vos spams !
+            <p className="text-[var(--status-green-text)] text-sm mt-4">
+              N'oubliez pas de v\u00e9rifier vos spams !
             </p>
           </div>
         ) : (
@@ -84,7 +84,7 @@ function ForgotPassword() {
             <div>
               <label
                 htmlFor="email"
-                className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1"
+                className="block text-sm font-medium text-[var(--text-secondary)] mb-1"
               >
                 Adresse email
               </label>
@@ -96,16 +96,16 @@ function ForgotPassword() {
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="votre@email.com"
                   autoComplete="email"
-                  className="w-full px-4 py-3 pl-12 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-4 py-3 pl-12 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
                 />
-                <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+                <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" size={20} />
               </div>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-3 px-4 rounded-xl bg-blue-600 text-white font-medium hover:bg-blue-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+              className="w-full py-3 px-4 rounded-xl bg-[var(--accent)] text-white font-medium hover:bg-[var(--accent-hover)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {loading ? 'Envoi en cours...' : 'Envoyer le lien'}
             </button>

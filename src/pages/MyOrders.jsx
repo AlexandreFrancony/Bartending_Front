@@ -8,31 +8,31 @@ import toast from 'react-hot-toast';
 const statusConfig = {
   pending: {
     label: 'En attente',
-    color: 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400',
+    color: 'bg-[var(--status-yellow-bg)] text-[var(--status-yellow-text)]',
     icon: FiClock,
     description: 'Votre commande a été reçue',
   },
   preparing: {
     label: 'En préparation',
-    color: 'bg-blue-100 text-blue-800 dark:bg-blue-900/30 dark:text-blue-400',
+    color: 'bg-[var(--status-blue-bg)] text-[var(--status-blue-text)]',
     icon: FiCoffee,
     description: 'Le barman prépare votre cocktail',
   },
   ready: {
     label: 'Prêt !',
-    color: 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400',
+    color: 'bg-[var(--status-green-bg)] text-[var(--status-green-text)]',
     icon: FiCheck,
     description: 'Votre cocktail vous attend au bar',
   },
   completed: {
     label: 'Servi',
-    color: 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300',
+    color: 'bg-[var(--bg-input)] text-[var(--text-primary)]',
     icon: FiCheck,
     description: 'Cocktail récupéré',
   },
   cancelled: {
     label: 'Annulé',
-    color: 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400',
+    color: 'bg-[var(--status-red-bg)] text-[var(--status-red-text)]',
     icon: FiX,
     description: 'Commande annulée',
   },
@@ -109,21 +109,21 @@ function MyOrders() {
   return (
     <PageWrapper>
       {/* Header */}
-      <div className="sticky top-0 z-20 bg-gray-50 dark:bg-gray-900 px-4 py-3 flex items-center justify-between border-b border-gray-200 dark:border-gray-700">
+      <div className="sticky top-0 z-20 bg-[var(--bg-primary)] px-4 py-3 flex items-center justify-between border-b border-[var(--border)]">
         <div className="flex items-center gap-3">
           <Link
             to="/"
-            className="p-2 -ml-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="p-2 -ml-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] rounded-lg hover:bg-[var(--bg-input)]"
           >
             <FiArrowLeft size={20} />
           </Link>
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <h1 className="text-xl font-bold text-[var(--text-primary)]">
             Mes commandes
           </h1>
         </div>
         <button
           onClick={loadOrders}
-          className="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+          className="p-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] rounded-lg hover:bg-[var(--bg-input)]"
           aria-label="Actualiser"
         >
           <FiRefreshCw size={20} className={loading ? 'animate-spin' : ''} />
@@ -134,7 +134,7 @@ function MyOrders() {
         {/* Active orders */}
         {activeOrders.length > 0 && (
           <section>
-            <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
+            <h2 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">
               En cours ({activeOrders.length})
             </h2>
             <div className="space-y-3">
@@ -146,11 +146,11 @@ function MyOrders() {
                 return (
                   <div
                     key={order.id}
-                    className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border-l-4 border-blue-500"
+                    className="bg-[var(--bg-card)] rounded-xl p-4 shadow-sm border-l-4 border-[var(--accent)]"
                   >
                     <div className="flex gap-4">
                       {/* Cocktail image */}
-                      <div className="w-16 h-16 rounded-lg overflow-hidden bg-gray-100 dark:bg-gray-700 flex-shrink-0">
+                      <div className="w-16 h-16 rounded-lg overflow-hidden bg-[var(--bg-input)] flex-shrink-0">
                         {imageUrl ? (
                           <img
                             src={imageUrl}
@@ -158,7 +158,7 @@ function MyOrders() {
                             className="w-full h-full object-cover"
                           />
                         ) : (
-                          <div className="w-full h-full flex items-center justify-center text-gray-400">
+                          <div className="w-full h-full flex items-center justify-center text-[var(--text-muted)]">
                             <FiCoffee size={24} />
                           </div>
                         )}
@@ -167,7 +167,7 @@ function MyOrders() {
                       {/* Order info */}
                       <div className="flex-1 min-w-0">
                         <div className="flex items-start justify-between gap-2">
-                          <h3 className="font-semibold text-gray-900 dark:text-white truncate">
+                          <h3 className="font-semibold text-[var(--text-primary)] truncate">
                             {order.cocktail_name}
                           </h3>
                           <span
@@ -177,10 +177,10 @@ function MyOrders() {
                             {config.label}
                           </span>
                         </div>
-                        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                        <p className="text-sm text-[var(--text-muted)] mt-1">
                           {config.description}
                         </p>
-                        <p className="text-xs text-gray-400 dark:text-gray-500 mt-2">
+                        <p className="text-xs text-[var(--text-muted)] mt-2">
                           Commandé à {formatTime(order.created_at)}
                         </p>
                       </div>
@@ -201,14 +201,14 @@ function MyOrders() {
                             ? 'bg-blue-400'
                             : order.status === 'ready'
                             ? 'bg-green-400'
-                            : 'bg-gray-200 dark:bg-gray-700'
+                            : 'bg-[var(--bg-input)]'
                         }`}
                       />
                       <div
                         className={`flex-1 h-1.5 rounded-full ${
                           order.status === 'ready'
                             ? 'bg-green-400'
-                            : 'bg-gray-200 dark:bg-gray-700'
+                            : 'bg-[var(--bg-input)]'
                         }`}
                       />
                     </div>
@@ -222,18 +222,18 @@ function MyOrders() {
         {/* Empty state for active orders */}
         {!loading && activeOrders.length === 0 && (
           <div className="text-center py-12">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
-              <FiCoffee size={32} className="text-gray-400" />
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[var(--bg-input)] flex items-center justify-center">
+              <FiCoffee size={32} className="text-[var(--text-muted)]" />
             </div>
-            <p className="text-gray-600 dark:text-gray-300 font-medium">
+            <p className="text-[var(--text-secondary)] font-medium">
               Aucune commande en cours
             </p>
-            <p className="text-gray-500 dark:text-gray-400 text-sm mt-1">
+            <p className="text-[var(--text-muted)] text-sm mt-1">
               Commandez un cocktail depuis le menu !
             </p>
             <Link
               to="/"
-              className="inline-block mt-4 px-6 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-xl transition-colors"
+              className="inline-block mt-4 px-6 py-2 bg-[var(--accent)] hover:bg-[var(--accent-hover)] text-white font-medium rounded-xl transition-colors"
             >
               Voir les cocktails
             </Link>
@@ -243,7 +243,7 @@ function MyOrders() {
         {/* Past orders */}
         {pastOrders.length > 0 && (
           <section>
-            <h2 className="text-sm font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider mb-3">
+            <h2 className="text-sm font-semibold text-[var(--text-muted)] uppercase tracking-wider mb-3">
               Historique
             </h2>
             <div className="space-y-2">
@@ -253,7 +253,7 @@ function MyOrders() {
                 return (
                   <div
                     key={order.id}
-                    className="bg-white dark:bg-gray-800 rounded-xl px-4 py-3 flex items-center justify-between"
+                    className="bg-[var(--bg-card)] rounded-xl px-4 py-3 flex items-center justify-between"
                   >
                     <div className="flex items-center gap-3 min-w-0">
                       <span
@@ -263,11 +263,11 @@ function MyOrders() {
                             : 'bg-red-500'
                         }`}
                       />
-                      <span className="text-gray-900 dark:text-white truncate">
+                      <span className="text-[var(--text-primary)] truncate">
                         {order.cocktail_name}
                       </span>
                     </div>
-                    <span className="text-sm text-gray-500 dark:text-gray-400 flex-shrink-0">
+                    <span className="text-sm text-[var(--text-muted)] flex-shrink-0">
                       {formatDate(order.created_at)}
                     </span>
                   </div>
@@ -283,13 +283,13 @@ function MyOrders() {
             {[...Array(3)].map((_, i) => (
               <div
                 key={i}
-                className="bg-white dark:bg-gray-800 rounded-xl p-4 animate-pulse"
+                className="bg-[var(--bg-card)] rounded-xl p-4 animate-pulse"
               >
                 <div className="flex gap-4">
-                  <div className="w-16 h-16 rounded-lg bg-gray-200 dark:bg-gray-700" />
+                  <div className="w-16 h-16 rounded-lg bg-[var(--bg-input)]" />
                   <div className="flex-1">
-                    <div className="h-5 bg-gray-200 dark:bg-gray-700 rounded w-1/2 mb-2" />
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4" />
+                    <div className="h-5 bg-[var(--bg-input)] rounded w-1/2 mb-2" />
+                    <div className="h-4 bg-[var(--bg-input)] rounded w-3/4" />
                   </div>
                 </div>
               </div>
@@ -299,7 +299,7 @@ function MyOrders() {
       </div>
 
       {/* Auto-refresh indicator */}
-      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-gray-800/80 dark:bg-gray-700/80 text-white text-xs rounded-full backdrop-blur-sm">
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 px-3 py-1.5 bg-[var(--bg-header)]/80 text-[var(--text-primary)] text-xs rounded-full backdrop-blur-sm">
         Mise à jour automatique
       </div>
     </PageWrapper>

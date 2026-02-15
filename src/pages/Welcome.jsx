@@ -18,21 +18,21 @@ function Welcome() {
   // Show nothing while checking auth
   if (loading) {
     return (
-      <PageWrapper className="flex items-center justify-center bg-gradient-to-br from-blue-500 to-purple-600 dark:from-gray-900 dark:to-gray-800">
+      <PageWrapper className="flex items-center justify-center bg-[var(--bg-primary)]">
         <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-white" />
       </PageWrapper>
     );
   }
 
   return (
-    <PageWrapper className="flex items-center justify-center p-4 bg-gradient-to-br from-blue-500 to-purple-600 dark:from-gray-900 dark:to-gray-800">
+    <PageWrapper className="flex items-center justify-center p-4 bg-[var(--bg-primary)]">
       <div className="w-full max-w-sm">
-        <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8">
+        <div className="bg-[var(--bg-card)] rounded-2xl shadow-xl p-8">
           {/* Logo */}
           <div className="text-center mb-8">
-            <div className="w-20 h-20 mx-auto mb-4 bg-blue-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center">
+            <div className="w-20 h-20 mx-auto mb-4 bg-[var(--bg-input)] rounded-full flex items-center justify-center">
               <svg
-                className="w-10 h-10 text-blue-600 dark:text-blue-400"
+                className="w-10 h-10 text-[var(--accent)]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -45,10 +45,10 @@ function Welcome() {
                 />
               </svg>
             </div>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+            <h1 className="text-2xl font-bold text-[var(--text-primary)]">
               Tipsy Bar
             </h1>
-            <p className="text-gray-500 dark:text-gray-400 mt-2">
+            <p className="text-[var(--text-muted)] mt-2">
               Découvrez notre carte de cocktails
             </p>
           </div>
@@ -57,7 +57,7 @@ function Welcome() {
           <div className="space-y-3">
             <Link
               to="/login"
-              className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-semibold rounded-xl transition-colors flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 bg-[var(--accent)] hover:bg-[var(--accent-hover)] active:bg-[var(--accent-hover)] text-white font-semibold rounded-xl transition-colors flex items-center justify-center gap-2"
             >
               <FiLogIn size={20} />
               Se connecter
@@ -65,7 +65,7 @@ function Welcome() {
 
             <Link
               to="/register"
-              className="w-full py-3 px-4 bg-white dark:bg-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-200 font-semibold rounded-xl border border-gray-200 dark:border-gray-600 transition-colors flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 bg-[var(--bg-card)] hover:bg-[var(--bg-input)] text-[var(--text-secondary)] font-semibold rounded-xl border border-[var(--border)] transition-colors flex items-center justify-center gap-2"
             >
               <FiUserPlus size={20} />
               Créer un compte
@@ -73,10 +73,10 @@ function Welcome() {
 
             <div className="relative my-4">
               <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-gray-200 dark:border-gray-600" />
+                <div className="w-full border-t border-[var(--border)]" />
               </div>
               <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400">
+                <span className="px-2 bg-[var(--bg-card)] text-[var(--text-muted)]">
                   ou
                 </span>
               </div>
@@ -84,7 +84,7 @@ function Welcome() {
 
             <Link
               to="/menu"
-              className="w-full py-3 px-4 bg-gray-100 dark:bg-gray-700/50 hover:bg-gray-200 dark:hover:bg-gray-700 text-gray-600 dark:text-gray-300 font-medium rounded-xl transition-colors flex items-center justify-center gap-2"
+              className="w-full py-3 px-4 bg-[var(--bg-input)] hover:bg-[var(--border)] text-[var(--text-secondary)] font-medium rounded-xl transition-colors flex items-center justify-center gap-2"
             >
               <FiBook size={20} />
               Voir le menu
@@ -93,7 +93,7 @@ function Welcome() {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-white/70 text-sm mt-6">
+        <p className="text-center text-[var(--text-muted)] text-sm mt-6">
           Connectez-vous pour commander
         </p>
       </div>

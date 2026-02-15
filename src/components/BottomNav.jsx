@@ -11,12 +11,12 @@ function BottomNav() {
   const linkClasses = ({ isActive }) =>
     `flex flex-col items-center gap-1 px-3 py-2 rounded-lg transition-colors ${
       isActive
-        ? 'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30'
-        : 'text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200'
+        ? 'text-[var(--accent)] bg-[var(--bg-input)]'
+        : 'text-[var(--text-muted)] hover:text-[var(--text-primary)]'
     }`;
 
   return (
-    <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 safe-bottom z-30">
+    <nav className="fixed bottom-0 left-0 right-0 bg-[var(--bg-card)] border-t border-[var(--border)] safe-bottom z-30">
       <div className="flex justify-around items-center py-2 px-4 max-w-md mx-auto">
         <NavLink to="/" className={linkClasses}>
           <FiHome size={22} />

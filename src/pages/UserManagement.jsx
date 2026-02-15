@@ -111,28 +111,28 @@ function UserManagement() {
       <UserDisplay />
 
       {/* Header */}
-      <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700">
+      <div className="px-4 py-3 border-b border-[var(--border)]">
         <div className="flex items-center gap-2">
-          <FiUsers className="text-blue-600 dark:text-blue-400" size={24} />
-          <h1 className="text-xl font-bold text-gray-900 dark:text-white">
+          <FiUsers className="text-[var(--accent)]" size={24} />
+          <h1 className="text-xl font-bold text-[var(--text-primary)]">
             Gestion des utilisateurs
           </h1>
         </div>
-        <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
+        <p className="text-sm text-[var(--text-muted)] mt-1">
           {users.length} utilisateur{users.length !== 1 ? 's' : ''} • {adminCount} admin{adminCount !== 1 ? 's' : ''}
         </p>
       </div>
 
       {/* Search */}
-      <div className="px-4 py-3 sticky top-0 z-10 bg-gray-50 dark:bg-gray-900">
+      <div className="px-4 py-3 sticky top-0 z-10 bg-[var(--bg-primary)]">
         <div className="relative">
-          <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
+          <FiSearch className="absolute left-3 top-1/2 -translate-y-1/2 text-[var(--text-muted)]" size={20} />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Rechercher un utilisateur..."
-            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            className="w-full pl-10 pr-4 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--bg-card)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)]"
           />
         </div>
       </div>
@@ -144,13 +144,13 @@ function UserManagement() {
             {[...Array(5)].map((_, i) => (
               <div
                 key={i}
-                className="bg-white dark:bg-gray-800 rounded-xl p-4 animate-pulse"
+                className="bg-[var(--bg-card)] rounded-xl p-4 animate-pulse"
               >
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700" />
+                  <div className="w-10 h-10 rounded-full bg-[var(--bg-input)]" />
                   <div className="flex-1">
-                    <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-2" />
-                    <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2" />
+                    <div className="h-4 bg-[var(--bg-input)] rounded w-1/3 mb-2" />
+                    <div className="h-3 bg-[var(--bg-input)] rounded w-1/2" />
                   </div>
                 </div>
               </div>
@@ -158,7 +158,7 @@ function UserManagement() {
           </div>
         ) : filteredUsers.length === 0 ? (
           <div className="text-center py-12">
-            <p className="text-gray-500 dark:text-gray-400">
+            <p className="text-[var(--text-muted)]">
               {search ? 'Aucun utilisateur trouvé' : 'Aucun utilisateur'}
             </p>
           </div>
@@ -167,15 +167,15 @@ function UserManagement() {
             {filteredUsers.map((user) => (
               <div
                 key={user.id}
-                className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm"
+                className="bg-[var(--bg-card)] rounded-xl p-4 shadow-sm"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex items-center gap-3">
                     <div
                       className={`w-10 h-10 rounded-full flex items-center justify-center ${
                         user.role === 'admin'
-                          ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400'
-                          : 'bg-gray-100 dark:bg-gray-700 text-gray-600 dark:text-gray-400'
+                          ? 'bg-[var(--status-purple-bg)] text-[var(--status-purple-text)]'
+                          : 'bg-[var(--bg-input)] text-[var(--text-muted)]'
                       }`}
                     >
                       {user.role === 'admin' ? (
@@ -186,23 +186,23 @@ function UserManagement() {
                     </div>
                     <div>
                       <div className="flex items-center gap-2">
-                        <span className="font-semibold text-gray-900 dark:text-white">
+                        <span className="font-semibold text-[var(--text-primary)]">
                           {user.username}
                         </span>
                         {user.id === currentUser?.id && (
-                          <span className="text-xs text-blue-600 dark:text-blue-400">
+                          <span className="text-xs text-[var(--accent)]">
                             (vous)
                           </span>
                         )}
                       </div>
-                      <p className="text-sm text-gray-500 dark:text-gray-400">
+                      <p className="text-sm text-[var(--text-muted)]">
                         {user.email}
                       </p>
                       <span
                         className={`inline-block mt-1 px-2 py-0.5 text-xs font-medium rounded-full ${
                           user.role === 'admin'
-                            ? 'bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400'
-                            : 'bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
+                            ? 'bg-[var(--status-purple-bg)] text-[var(--status-purple-text)]'
+                            : 'bg-[var(--bg-input)] text-[var(--text-secondary)]'
                         }`}
                       >
                         {user.role === 'admin' ? 'Admin' : 'Utilisateur'}
@@ -217,8 +217,8 @@ function UserManagement() {
                       disabled={actionLoading === user.id}
                       className={`p-2 rounded-lg transition-colors ${
                         user.role === 'admin'
-                          ? 'text-purple-600 dark:text-purple-400 hover:bg-purple-50 dark:hover:bg-purple-900/20'
-                          : 'text-gray-500 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-700'
+                          ? 'text-[var(--status-purple-text)] hover:bg-[var(--status-purple-bg)]'
+                          : 'text-[var(--text-muted)] hover:bg-[var(--bg-input)]'
                       }`}
                       title={user.role === 'admin' ? 'Retirer admin' : 'Promouvoir admin'}
                     >
@@ -228,7 +228,7 @@ function UserManagement() {
                     <button
                       onClick={() => setResetModal(user)}
                       disabled={actionLoading === user.id}
-                      className="p-2 text-amber-600 dark:text-amber-400 hover:bg-amber-50 dark:hover:bg-amber-900/20 rounded-lg transition-colors"
+                      className="p-2 text-[var(--status-amber-text)] hover:bg-[var(--status-amber-bg)] rounded-lg transition-colors"
                       title="Réinitialiser mot de passe"
                     >
                       <FiKey size={18} />
@@ -238,7 +238,7 @@ function UserManagement() {
                       <button
                         onClick={() => setDeleteModal(user)}
                         disabled={actionLoading === user.id}
-                        className="p-2 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 rounded-lg transition-colors"
+                        className="p-2 text-[var(--status-red-text)] hover:bg-[var(--status-red-bg)] rounded-lg transition-colors"
                         title="Supprimer"
                       >
                         <FiTrash2 size={18} />
@@ -260,13 +260,13 @@ function UserManagement() {
             onClick={() => setDeleteModal(null)}
           />
           <div className="fixed inset-x-4 top-1/2 -translate-y-1/2 z-50 max-w-sm mx-auto">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+            <div className="bg-[var(--bg-card)] rounded-2xl p-6 shadow-xl">
+              <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">
                 Supprimer l'utilisateur ?
               </h3>
-              <p className="text-gray-500 dark:text-gray-400 mb-4">
+              <p className="text-[var(--text-muted)] mb-4">
                 Êtes-vous sûr de vouloir supprimer{' '}
-                <span className="font-semibold text-gray-900 dark:text-white">
+                <span className="font-semibold text-[var(--text-primary)]">
                   {deleteModal.username}
                 </span>{' '}
                 ? Cette action est irréversible.
@@ -274,7 +274,7 @@ function UserManagement() {
               <div className="flex gap-3">
                 <button
                   onClick={() => setDeleteModal(null)}
-                  className="flex-1 py-2.5 px-4 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                  className="flex-1 py-2.5 px-4 bg-[var(--bg-input)] text-[var(--text-secondary)] font-medium rounded-xl hover:bg-[var(--border)] transition-colors"
                 >
                   Annuler
                 </button>
@@ -302,13 +302,13 @@ function UserManagement() {
             }}
           />
           <div className="fixed inset-x-4 top-1/2 -translate-y-1/2 z-50 max-w-sm mx-auto">
-            <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-xl">
-              <h3 className="text-lg font-bold text-gray-900 dark:text-white mb-2">
+            <div className="bg-[var(--bg-card)] rounded-2xl p-6 shadow-xl">
+              <h3 className="text-lg font-bold text-[var(--text-primary)] mb-2">
                 Réinitialiser le mot de passe
               </h3>
-              <p className="text-gray-500 dark:text-gray-400 mb-4">
+              <p className="text-[var(--text-muted)] mb-4">
                 Nouveau mot de passe pour{' '}
-                <span className="font-semibold text-gray-900 dark:text-white">
+                <span className="font-semibold text-[var(--text-primary)]">
                   {resetModal.username}
                 </span>
               </p>
@@ -317,7 +317,7 @@ function UserManagement() {
                 value={newPassword}
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="Nouveau mot de passe"
-                className="w-full px-4 py-2.5 rounded-xl border border-gray-200 dark:border-gray-600 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-blue-500 mb-4"
+                className="w-full px-4 py-2.5 rounded-xl border border-[var(--border)] bg-[var(--bg-input)] text-[var(--text-primary)] placeholder-[var(--text-muted)] focus:outline-none focus:ring-2 focus:ring-[var(--accent)] mb-4"
               />
               <div className="flex gap-3">
                 <button
@@ -325,14 +325,14 @@ function UserManagement() {
                     setResetModal(null);
                     setNewPassword('');
                   }}
-                  className="flex-1 py-2.5 px-4 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-200 font-medium rounded-xl hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
+                  className="flex-1 py-2.5 px-4 bg-[var(--bg-input)] text-[var(--text-secondary)] font-medium rounded-xl hover:bg-[var(--border)] transition-colors"
                 >
                   Annuler
                 </button>
                 <button
                   onClick={handleResetPassword}
                   disabled={actionLoading === resetModal.id || !newPassword.trim()}
-                  className="flex-1 py-2.5 px-4 bg-blue-600 text-white font-medium rounded-xl hover:bg-blue-700 transition-colors disabled:opacity-50"
+                  className="flex-1 py-2.5 px-4 bg-[var(--accent)] text-white font-medium rounded-xl hover:bg-[var(--accent-hover)] transition-colors disabled:opacity-50"
                 >
                   Confirmer
                 </button>

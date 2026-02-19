@@ -35,7 +35,7 @@ function ForgotPassword() {
       }
 
       setSent(true);
-      toast.success('Email envoy\é !');
+      toast.success('Email envoyé !');
     } catch (error) {
       toast.error(error.message);
     } finally {
@@ -52,18 +52,18 @@ function ForgotPassword() {
           className="inline-flex items-center gap-2 text-[var(--text-secondary)] hover:text-[var(--text-primary)] mb-8"
         >
           <FiArrowLeft size={20} />
-          Retour \à la connexion
+          Retour à la connexion
         </Link>
 
         {/* Title */}
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-[var(--text-primary)]">
-            Mot de passe oubli\é
+            Mot de passe oublié
           </h1>
           <p className="mt-2 text-[var(--text-secondary)]">
             {sent
-              ? 'V\érifiez votre bo\îte mail'
-              : 'Entrez votre email pour recevoir un lien de r\éinitialisation'}
+              ? 'Vérifiez votre boîte mail'
+              : 'Entrez votre email pour recevoir un lien de réinitialisation'}
           </p>
         </div>
 
@@ -72,10 +72,10 @@ function ForgotPassword() {
           <div className="bg-[var(--status-green-bg)] border border-[var(--status-green-text)]/30 rounded-xl p-6 text-center">
             <div className="text-4xl mb-4">&#128231;</div>
             <p className="text-[var(--status-green-text)]">
-              Si un compte existe avec l'adresse <strong>{email}</strong>, vous recevrez un email avec les instructions pour r\éinitialiser votre mot de passe.
+              Si un compte existe avec l'adresse <strong>{email}</strong>, vous recevrez un email avec les instructions pour réinitialiser votre mot de passe.
             </p>
             <p className="text-[var(--status-green-text)] text-sm mt-4">
-              N'oubliez pas de v\érifier vos spams !
+              N'oubliez pas de vérifier vos spams !
             </p>
           </div>
         ) : (
